@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Intervenant;
 use App\Form\IntervenantFormType;
 use Doctrine\Persistence\ManagerRegistry;
+use http\Client\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,11 +59,18 @@ class IntervenatController extends AbstractController
     /**
      * @Route("/intervenant/create", name="intervenant_create")
      */
-    public function new()
+    public function new(Request $request)
     {
         $newIntervenant = new Intervenant();
 
         $form = $this->createForm(IntervenantFormType::class, $newIntervenant);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $newIntervenant = $form->getData();
+            $entityManager = $this->doctrine->getManager();
+
+        }
 
         return $this->render('intervenant/newIntervenant.html.twig',
             ['intervenantForm' => $form->createView(),
