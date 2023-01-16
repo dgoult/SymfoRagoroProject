@@ -4,11 +4,34 @@
 {% endblock %}
 {% block body %}
     <div class="container mt-5">
-        <h1 class="mb-3">{{ title }}</h1>
+    <h1 class="mb-3">{{ title }}</h1>
 
-{#        {% if isSuccess == false %}#}
-{#            <span style="color: limegreen">L'intervenant {{ intervenant.name }} {{ intervenant.prenom }} à été enregistrer avec succés</span>#}
-{#        {% endif %}#}
-        {{ form(intervenantForm) }}
+    <div class="form-control">
+        {{ form_start(intervenantForm) }}
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="intervenant_form[name]" class="form-label">{{ form_label(intervenantForm.name) }}</label>
+                    {{ form_widget(intervenantForm.name, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="intervenant_form[prenom]" class="form-label">{{ form_label(intervenantForm.prenom) }}</label>
+                    {{ form_widget(intervenantForm.prenom, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="intervenant_form[specialiteprofessionnelle]" class="form-label">{{ form_label(intervenantForm.specialiteprofessionnelle) }}</label>
+            {{ form_widget(intervenantForm.specialiteprofessionnelle, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(intervenantForm.enregistrer, {'attr': {'class': 'btn btn-primary', 'type': 'submit'}}) }}
+        </div>
+
+        {{ form_end(intervenantForm) }}
     </div>
 {% endblock %}
