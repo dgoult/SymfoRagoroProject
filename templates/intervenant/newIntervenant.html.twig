@@ -6,6 +6,9 @@
     <div class="container mt-5">
         <h1 class="mb-3">{{ title }}</h1>
 
+{#        {% if isSuccess == false %}#}
+{#            <span style="color: limegreen">L'intervenant {{ intervenant.name }} {{ intervenant.prenom }} à été enregistrer avec succés</span>#}
+{#        {% endif %}#}
         {{ form(intervenantForm) }}
     </div>
 {% endblock %}
