@@ -17,16 +17,19 @@ class Intervenant
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $name = null;
+    private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $specialiteprofessionnelle = null;
+    private ?string $specialite_professionnelle = null;
 
     #[ORM\OneToMany(mappedBy: 'fk_intervenant', targetEntity: Matiere::class)]
     private Collection $matieres;
 
     #[ORM\Column(length: 70)]
     private ?string $prenom = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
 
     #[Pure] public function __construct()
     {
@@ -38,26 +41,38 @@ class Intervenant
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getNom(): ?string
     {
-        return $this->name;
+        return $this->nom;
     }
 
-    public function setName(string $name): self
+    public function setNom(string $nom): self
     {
-        $this->name = $name;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getSpecialiteprofessionnelle(): ?string
+    public function getEmail(): ?string
     {
-        return $this->specialiteprofessionnelle;
+        return $this->email;
     }
 
-    public function setSpecialiteprofessionnelle(?string $specialiteprofessionnelle): self
+    public function setEmail(string $email): self
     {
-        $this->specialiteprofessionnelle = $specialiteprofessionnelle;
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getSpecialiteProfessionnelle(): ?string
+    {
+        return $this->specialite_professionnelle;
+    }
+
+    public function setSpecialiteProfessionnelle(?string $specialite_professionnelle): self
+    {
+        $this->specialite_professionnelle = $specialite_professionnelle;
 
         return $this;
     }
