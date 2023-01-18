@@ -29,8 +29,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column]
-    private ?int $role = null;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
@@ -105,17 +103,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getRole(): ?int
-    {
-        return $this->role;
-    }
-
-    public function setRole(int $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
 
     public function isVerified(): bool
     {
