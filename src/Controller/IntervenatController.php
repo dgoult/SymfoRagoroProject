@@ -6,8 +6,10 @@ use App\Entity\Intervenant;
 use App\Form\IntervenantFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function MongoDB\BSON\toJSON;
 
 class IntervenatController extends AbstractController
 {
@@ -18,9 +20,10 @@ class IntervenatController extends AbstractController
     }
 
     /**
-     * @Route("/intervenant/index", name="intervenant_index")
+     * * Exemple Ajout d'une entité
+     ************ Route("/intervenant/exemple", name="intervenant_index")
      */
-    public function index(): Response
+    public function exemple(): Response
     {
         //Récupération de l'objet EntityManager via getDoctrine()
         $entityManager = $this->doctrine->getManager();
@@ -39,9 +42,10 @@ class IntervenatController extends AbstractController
         return new Response("Création de l'intervenant ".$inter->getName()." ".$inter->getPrenom()." avec l'id ".$inter->getId());
     }
     /**
-     * @Route("/intervenant/show/{id}", name="intervenant_show")
+     * * Exemple Récupération d'une entité
+     ************* Route("/intervenant/exempleShow/{id}", name="intervenant_show")
      */
-    public function show($id): Response
+    public function exempleShow($id): Response
     {
         $inter = $this->doctrine
             ->getRepository(Intervenant::class)
@@ -56,17 +60,28 @@ class IntervenatController extends AbstractController
             ", prénom : ".$inter->getPrenom());
     }
     /**
-     * @Route("/intervenant/create", name="intervenant_create")
+     * @Route("/intervenant/new", name="intervenant_new")
      */
-    public function new()
+    public function newIntervenant(Request $request)
     {
         $newIntervenant = new Intervenant();
 
         $form = $this->createForm(IntervenantFormType::class, $newIntervenant);
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $newIntervenant = $form->getData();
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($newIntervenant);
+            $entityManager->flush();
+            $this->addFlash('success', 'L\'intervenant '.$newIntervenant->getName().' '.$newIntervenant->getPrenom().' à été enregistrer avec succés');
+        }
+
         return $this->render('intervenant/newIntervenant.html.twig',
             ['intervenantForm' => $form->createView(),
                 'title' => "Création d'un intervenant",
+                'intervenant' => $newIntervenant,
         ]);
     }
 }
