@@ -75,7 +75,7 @@ class IntervenatController extends AbstractController
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($newIntervenant);
             $entityManager->flush();
-            $this->addFlash('success', 'L\'intervenant '.$newIntervenant->getName().' '.$newIntervenant->getPrenom().' à été enregistrer avec succés');
+            $this->addFlash('success', 'L\'intervenant '.$newIntervenant->getNom().' '.$newIntervenant->getPrenom().' à été enregistré avec succés');
         }
 
         return $this->render('intervenant/newIntervenant.html.twig',
