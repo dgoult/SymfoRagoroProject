@@ -11,8 +11,8 @@
             <div class="row">
                 <div class="col">
                     <div class="mb-3">
-                        <label for="intervenant_form[name]" class="form-label">{{ form_label(intervenantForm.name) }}</label>
-                        {{ form_widget(intervenantForm.name, {'attr': {'class': 'form-control'}}) }}
+                        <label for="intervenant_form[nom]" class="form-label">{{ form_label(intervenantForm.nom) }}</label>
+                        {{ form_widget(intervenantForm.nom, {'attr': {'class': 'form-control'}}) }}
                     </div>
                 </div>
                 <div class="col">
@@ -23,9 +23,14 @@
                 </div>
             </div>
 
+        <div class="mb-3">
+            <label for="intervenant_form[email]" class="form-label">{{ form_label(intervenantForm.email) }}</label>
+            {{ form_widget(intervenantForm.email, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
             <div class="mb-3">
-                <label for="intervenant_form[specialiteprofessionnelle]" class="form-label">{{ form_label(intervenantForm.specialiteprofessionnelle) }}</label>
-                {{ form_widget(intervenantForm.specialiteprofessionnelle, {'attr': {'class': 'form-control'}}) }}
+                <label for="intervenant_form[specialite_professionnelle]" class="form-label">{{ form_label(intervenantForm.specialite_professionnelle) }}</label>
+                {{ form_widget(intervenantForm.specialite_professionnelle, {'attr': {'class': 'form-control'}}) }}
             </div>
 
             <div class="mb-3">
