@@ -1,0 +1,38 @@
+{% extends 'admin/admin-home.html.twig' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+    <div class="container mt-3">
+        <h1 class="mb-3">{{ title }}</h1>
+    </div>
+
+    <div class="form-control">
+        {{ form_start(matiereForm) }}
+
+            <div class="row">
+                <div class="col">
+                    <label for="matiereForm[intitule]" class="form-label">{{ form_label(matiereForm.intitule) }}</label>
+                    {{ form_widget(matiereForm.intitule, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col">
+                    <label for="matiereForm[duree]" class="form-label">{{ form_label(matiereForm.duree) }}</label>
+                    {{ form_widget(matiereForm.duree, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="matiereForm[intervenant]" class="form-label">{{ form_label(matiereForm.intervenant) }}</label>
+                {{ form_widget(matiereForm.intervenant, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+        <button class="btn btn-lg btn-primary" type="submit">
+            Ajouter
+        </button>
+
+        {{ form_end(matiereForm) }}
+    </div>
+{% endblock %}

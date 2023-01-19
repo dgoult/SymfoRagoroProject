@@ -22,7 +22,7 @@ class Matiere
     private ?int $duree = null;
 
     #[ORM\ManyToOne(inversedBy: 'matieres')]
-    private ?Intervenant $fk_intervenant = null;
+    private ?Intervenant $intervenant = null;
 
     #[ORM\OneToMany(mappedBy: 'Matiere', targetEntity: Cours::class)]
     private Collection $cours;
@@ -61,14 +61,14 @@ class Matiere
         return $this;
     }
 
-    public function getFkIntervenant(): ?Intervenant
+    public function getIntervenant(): ?Intervenant
     {
-        return $this->fk_intervenant;
+        return $this->intervenant;
     }
 
-    public function setFkIntervenant(?Intervenant $fk_intervenant): self
+    public function setIntervenant(?Intervenant $intervenant): self
     {
-        $this->fk_intervenant = $fk_intervenant;
+        $this->intervenant = $intervenant;
 
         return $this;
     }

@@ -22,7 +22,7 @@ class Intervenant
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $specialite_professionnelle = null;
 
-    #[ORM\OneToMany(mappedBy: 'fk_intervenant', targetEntity: Matiere::class)]
+    #[ORM\OneToMany(mappedBy: 'intervenant', targetEntity: Matiere::class)]
     private Collection $matieres;
 
     #[ORM\Column(length: 70)]
