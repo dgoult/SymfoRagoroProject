@@ -70,7 +70,7 @@ class CoursController extends AbstractController
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($cours);
             $entityManager->flush();
-            $this->addFlash('success', 'Le cours '.$cours->getNom().' '.$cours->getPrenom().' à été modifié avec succés');
+            $this->addFlash('success', 'Le cours '.$cours->getNom().' à été modifié avec succés');
         }
 
         return $this->render('cours/newCours.html.twig',
