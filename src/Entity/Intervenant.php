@@ -31,9 +31,13 @@ class Intervenant
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
+    #[ORM\OneToMany(mappedBy: 'Intervenant', targetEntity: Cours::class)]
+    private Collection $cours;
+
     #[Pure] public function __construct()
     {
         $this->matieres = new ArrayCollection();
+        $this->cours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,6 +55,23 @@ class Intervenant
         $this->nom = $nom;
 
         return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->nom . ' ' . $this->prenom;
     }
 
     public function getEmail(): ?string
@@ -107,14 +128,33 @@ class Intervenant
         return $this;
     }
 
-    public function getPrenom(): ?string
+
+    /**
+     * @return Collection<int, Cours>
+     */
+    public function getCours(): Collection
     {
-        return $this->prenom;
+        return $this->cours;
     }
 
-    public function setPrenom(string $prenom): self
+    public function addCour(Cours $cour): self
     {
-        $this->prenom = $prenom;
+        if (!$this->cours->contains($cour)) {
+            $this->cours->add($cour);
+            $cour->setIntervenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCour(Cours $cour): self
+    {
+        if ($this->cours->removeElement($cour)) {
+            // set the owning side to null (unless already changed)
+            if ($cour->getIntervenant() === $this) {
+                $cour->setIntervenant(null);
+            }
+        }
 
         return $this;
     }
