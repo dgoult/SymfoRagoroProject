@@ -1,0 +1,36 @@
+{% extends 'admin/admin-home.html.twig' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+    <h3>Cours</h3>
+    <div class="listing-cour">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <th>Durée</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for cour in cours %}
+                <tr>
+                    <td>{{ cour.id }}</td>
+                    <td>{{ cour.nom }}</td>
+                    <td>{{ cour.dateDebutString }}</td>
+                    <td>{{ cour.dateFinString }}</td>
+                    <td>{{ cour.dureeMinutes }}</td>
+                    <td><a href="{{ path('cours_edit', { 'id': cour.id}) }}">Modifier</a></td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}
