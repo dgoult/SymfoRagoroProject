@@ -64,6 +64,9 @@ class CoursController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()){
             $cours = $form->getData();
+            // Calcul de la durée du cours
+            $interval = date_diff($cours->getDateDebut(), $cours->getDateFin(), true);
+            $cours->setDureeMinutes(((int)$interval->format("%h") * 60) + (int)$interval->format("%i"));
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($cours);
             $entityManager->flush();
@@ -91,6 +94,22 @@ class CoursController extends AbstractController
             'cours' => $cours,
             'title' => 'Liste des intervenants'
         ]);
+
+    }
+
+    /**
+     * @Route("/cours/delete/{id}", name="cours_delete")
+     */
+    public function deleteCours(Request $request, $id)
+    {
+        $entityManager = $this->doctrine->getManager();
+        $entity = $entityManager->getRepository(Cours::class)->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Cours entity.');
+        }
+        $entityManager->remove($entity);
+        $entityManager->flush();
+        return $this->redirectToRoute('cours_list');
 
     }
 }

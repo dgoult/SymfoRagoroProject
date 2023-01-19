@@ -24,7 +24,10 @@
                     <td>{{ cour.dateDebutString }}</td>
                     <td>{{ cour.dateFinString }}</td>
                     <td>{{ cour.dureeMinutes }}</td>
-                    <td><a href="{{ path('cours_edit', { 'id': cour.id}) }}">Modifier</a></td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('cours_edit', { 'id': cour.id}) }}">Modifier</a>
+                        <a class="btn btn-danger" href="{{ path('cours_delete', { 'id': cour.id}) }}">Supprimer</a>
+                    </td>
                 </tr>
             {% endfor %}
 

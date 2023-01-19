@@ -23,7 +23,7 @@ class CoursFormType extends AbstractType
             ->add('date_fin', DateTimeType::class)
             ->add('Intervenant', EntityType::class, [
                 'class' => Intervenant::class,
-                'choice_label' => 'nom'
+                'choice_label' => 'FullName'
             ])
             ->add('Matiere', EntityType::class, [
                 'class' => Matiere::class,

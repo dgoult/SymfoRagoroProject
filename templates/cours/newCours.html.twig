@@ -9,26 +9,24 @@
 
     <div class="form-control">
         {{ form_start(coursForm) }}
-        <div class="col">
+
             <div class="mb-3">
                 <label for="coursForm[nom]" class="form-label">{{ form_label(coursForm.nom) }}</label>
                 {{ form_widget(coursForm.nom, {'attr': {'class': 'form-control'}}) }}
             </div>
-        </div>
 
             <div class="row">
-                <div class="mb-3">
+                <div class="col">
                     <label for="coursForm[date_debut]" class="form-label">{{ form_label(coursForm.date_debut) }}</label>
                     {{ form_widget(coursForm.date_debut, {'attr': {'class': 'form-control'}}) }}
                 </div>
-                <div class="mb-3">
+                <div class="col">
                     <div class="mb-3">
                         <label for="coursForm[date_fin]" class="form-label">{{ form_label(coursForm.date_fin) }}</label>
                         {{ form_widget(coursForm.date_fin, {'attr': {'class': 'form-control'}}) }}
                     </div>
                 </div>
             </div>
-
 
             <div class="mb-3">
                 <label for="coursForm[Intervenant]" class="form-label">{{ form_label(coursForm.Intervenant) }}</label>
@@ -44,7 +42,7 @@
                value="{{ csrf_token('authenticate') }}"
         >
         <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
+            Ajouter
         </button>
 
         {{ form_end(coursForm) }}
