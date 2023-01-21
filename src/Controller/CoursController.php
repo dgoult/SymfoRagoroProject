@@ -3,15 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Cours;
-use App\Entity\Intervenant;
 use App\Form\CoursFormType;
-use App\Form\IntervenantFormType;
+use App\Form\CoursType;
+use App\Repository\CoursRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function MongoDB\BSON\toJSON;
 
 class CoursController extends AbstractController
 {
@@ -19,6 +18,79 @@ class CoursController extends AbstractController
 
     function __construct( ManagerRegistry $doctrine ){
         $this->doctrine = $doctrine ;
+    }
+    /**
+     * @Route("/calendar", name="app_cours_calendar", methods={"GET"})
+     */
+    public function calendar(): Response
+    {
+        return $this->render('calendar.html.twig');
+    }
+
+    #[Route('/cours/calender_index', name: 'app_cours_index', methods: ['GET'])]
+    public function index(CoursRepository $coursRepository): Response
+    {
+        return $this->render('cours/index.html.twig', [
+            'cours' => $this->doctrine->getRepository(Cours::class)->findAll()
+        ]);
+    }
+
+    #[Route('/cours/calender_new', name: 'app_cours_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, CoursRepository $coursRepository): Response
+    {
+        $cour = new Cours();
+        $form = $this->createForm(CoursFormType::class, $cour);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Calcul de la durée du cours
+            $interval = date_diff($cour->getDateDebut(), $cour->getDateFin(), true);
+            $cour->setDureeMinutes(((int)$interval->format("%h") * 60) + (int)$interval->format("%i"));
+            $coursRepository->save($cour, true);
+
+            return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('cours/new.html.twig', [
+            'cour' => $cour,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/cours/calendar/{id}', name: 'app_cours_show', methods: ['GET'])]
+    public function show(Cours $cour): Response
+    {
+        return $this->render('cours/show.html.twig', [
+            'cour' => $cour,
+        ]);
+    }
+
+    #[Route('/cours/{id}/edit', name: 'app_cours_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Cours $cour, CoursRepository $coursRepository): Response
+    {
+        $form = $this->createForm(CoursType::class, $cour);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $coursRepository->save($cour, true);
+
+            return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('cours/edit.html.twig', [
+            'cour' => $cour,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/cours/{id}', name: 'app_cours_delete', methods: ['POST'])]
+    public function delete(Request $request, Cours $cour, CoursRepository $coursRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
+            $coursRepository->remove($cour, true);
+        }
+
+        return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
@@ -46,9 +118,10 @@ class CoursController extends AbstractController
 
         return $this->render('cours/newCours.html.twig',
             ['coursForm' => $form->createView(),
-                'title' => "Création d'un cours",
-                'cours' => $newCours,
-        ]);
+             'title' => "Création d'un cours",
+             'cours' => $newCours,
+             'action' => "Créer"
+            ]);
     }
 
     /**
@@ -77,9 +150,9 @@ class CoursController extends AbstractController
             ['coursForm' => $form->createView(),
              'title' => "Création d'un cours",
              'cours' => $cours,
+             'action' => "Modifier"
             ]);
     }
-
     /**
      * @Route("/cours/list", name="cours_list")
      * @param Request $request
@@ -112,4 +185,5 @@ class CoursController extends AbstractController
         return $this->redirectToRoute('cours_list');
 
     }
+
 }

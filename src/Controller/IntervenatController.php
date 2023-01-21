@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use function MongoDB\BSON\toJSON;
-
+#[Route('/admin')]
 class IntervenatController extends AbstractController
 {
     public ManagerRegistry $doctrine;
@@ -61,9 +61,8 @@ class IntervenatController extends AbstractController
             ", nom : ".$inter->getName().
             ", prénom : ".$inter->getPrenom());
     }
-    /**
-     * @Route("/intervenant/new", name="intervenant_new")
-     */
+
+    #[Route("/intervenant/new", name: 'intervenant_new', methods: ['POST'])]
     public function newIntervenant(Request $request)
     {
         $newIntervenant = new Intervenant();

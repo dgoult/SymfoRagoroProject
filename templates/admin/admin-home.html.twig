@@ -1,34 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin-template.html.twig' %}
+
 {% block title %}
     {{ title }}
 {% endblock %}
-{% block body %}
-    <div class="row">
-        <div class="col-2">
-            <h2>Menu Admin</h2>
-            <div>
-                <strong>Intervenant</strong>
-                <ul>
-                    <li><a href="{{ path('intervenant_list') }}">Liste</a></li>
-                    <li><a href="{{ path('intervenant_new') }}">Créer</a></li>
-                </ul>
-                <strong>Cours</strong>
-                <ul>
-                    <li><a href="{{ path('cours_list') }}">Liste</a></li>
-                    <li><a href="{{ path('cours_new') }}">Créer</a></li>
-                </ul>
-                <strong>Matiere</strong>
-                <ul>
-                    <li><a href="{{ path('matiere_list') }}">Liste</a></li>
-                    <li><a href="{{ path('matiere_new') }}">Créer</a></li>
-                </ul>
 
+{% block javascripts %}
+    {{ encore_entry_script_tags('calendar') }}
+{% endblock %}
 
-            </div>
-        </div>
-        <div class="col">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </div>
+{% block content %}
+    {% include 'calendar.html.twig' %}
 {% endblock %}

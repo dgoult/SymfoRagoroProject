@@ -1,10 +1,28 @@
 {
   "dependencies": {
-    "bootstrap3-dialog": "^1.35.4"
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "@fullcalendar/core": "^6.0.3",
+    "@fullcalendar/daygrid": "^6.0.3",
+    "@fullcalendar/interaction": "^6.0.3",
+    "@fullcalendar/list": "^6.0.3",
+    "@fullcalendar/timegrid": "^6.0.3",
+    "@symfony/stimulus-bridge": "^3.2.1",
+    "bootstrap3-dialog": "^1.35.4",
+    "core-js": "^3.27.2",
+    "webpack": "^5.75.0"
   },
   "devDependencies": {
     "@popperjs/core": "^2.11.6",
+    "@symfony/webpack-encore": "^4.2.0",
     "bootstrap": "^5.2.3",
-    "jquery": "^3.6.3"
+    "jquery": "^3.6.3",
+    "webpack-cli": "^5.0.1"
+  },
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
   }
 }
