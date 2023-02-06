@@ -62,7 +62,7 @@ class IntervenatController extends AbstractController
             ", prénom : ".$inter->getPrenom());
     }
 
-    #[Route("/intervenant/new", name: 'intervenant_new', methods: ['POST'])]
+    #[Route("/intervenant/new", name: 'intervenant_new', methods: ['POST', 'GET'])]
     public function newIntervenant(Request $request)
     {
         $newIntervenant = new Intervenant();

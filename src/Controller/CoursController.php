@@ -83,16 +83,6 @@ class CoursController extends AbstractController
         ]);
     }
 
-    #[Route('/cours/{id}', name: 'app_cours_delete', methods: ['POST'])]
-    public function delete(Request $request, Cours $cour, CoursRepository $coursRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
-            $coursRepository->remove($cour, true);
-        }
-
-        return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
-    }
-
     /**
      * @Route("/cours/new", name="cours_new")
      */
@@ -185,5 +175,6 @@ class CoursController extends AbstractController
         return $this->redirectToRoute('cours_list');
 
     }
+
 
 }
