@@ -51,9 +51,10 @@ class CoursController extends AbstractController
             return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('cours/new.html.twig', [
+        return $this->renderForm('cours/newCours.html.twig', [
             'cour' => $cour,
-            'form' => $form,
+            'coursForm' => $form,
+            'title' => 'Nouveau cours'
         ]);
     }
 
@@ -62,24 +63,6 @@ class CoursController extends AbstractController
     {
         return $this->render('cours/show.html.twig', [
             'cour' => $cour,
-        ]);
-    }
-
-    #[Route('/cours/{id}/edit', name: 'app_cours_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Cours $cour, CoursRepository $coursRepository): Response
-    {
-        $form = $this->createForm(CoursType::class, $cour);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $coursRepository->save($cour, true);
-
-            return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('cours/edit.html.twig', [
-            'cour' => $cour,
-            'form' => $form,
         ]);
     }
 
@@ -108,9 +91,9 @@ class CoursController extends AbstractController
 
         return $this->render('cours/newCours.html.twig',
             ['coursForm' => $form->createView(),
-             'title' => "Création d'un cours",
+             'title' => "Modification d'un cours",
              'cours' => $newCours,
-             'action' => "Créer"
+             'action' => "Modifier"
             ]);
     }
 

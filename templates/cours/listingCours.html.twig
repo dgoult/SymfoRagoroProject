@@ -5,6 +5,10 @@
 {% block content %}
     <h3>Cours</h3>
     <div class="listing-cour">
+        <div class="d-flex justify-content-end">
+            <a class="mr-auto btn btn-primary " href="{{ path('cours_new') }}">Créer</a>
+        </div>
+
         <table class="table">
             <thead>
             <tr>
@@ -13,6 +17,7 @@
                 <th>Date début</th>
                 <th>Date fin</th>
                 <th>Durée</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>

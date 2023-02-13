@@ -4,6 +4,9 @@
 {% endblock %}
 {% block content %}
     <h3>Matière</h3>
+    <div class="d-flex justify-content-end">
+        <a class="mr-auto btn btn-primary " href="{{ path('matiere_new') }}">Créer</a>
+    </div>
     <div class="listing-matiere">
         <table class="table">
             <thead>
@@ -13,6 +16,7 @@
                 <th>Date début</th>
                 <th>Date fin</th>
                 <th>Durée</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>

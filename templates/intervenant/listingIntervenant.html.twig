@@ -4,6 +4,9 @@
 {% endblock %}
 {% block content %}
     <h3>Intervenants</h3>
+    <div class="d-flex justify-content-end">
+        <a class="mr-auto btn btn-primary " href="{{ path('intervenant_new') }}">Créer</a>
+    </div>
     <div class="listing-intervenant">
         <table class="table">
             <thead>
@@ -12,6 +15,7 @@
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Spécialité</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>

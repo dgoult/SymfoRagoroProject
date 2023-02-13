@@ -12,6 +12,8 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstrac
      */
     public function home(): Response
     {
+        $hasAccess = $this->isGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         return $this->render('admin/admin-home.html.twig', [
             'title'=>'Accueil'
