@@ -1,4 +1,4 @@
-{% extends 'admin/admin-home.html.twig' %}
+{% extends 'admin/admin-template.html.twig' %}
 {% block title %}
     {{ title }}
 {% endblock %}
@@ -19,12 +19,20 @@
                     <label for="matiereForm[duree]" class="form-label">{{ form_label(matiereForm.duree) }}</label>
                     {{ form_widget(matiereForm.duree, {'attr': {'class': 'form-control'}}) }}
                 </div>
+                <div class="col-1">
+                    <label for="matiereForm[couleur_calendrier]" class="form-label">{{ form_label(matiereForm.couleur_calendrier) }}</label>
+                    {{ form_widget(matiereForm.couleur_calendrier, {'attr': {'class': 'form-control'}}) }}
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="matiereForm[intervenant]" class="form-label">{{ form_label(matiereForm.intervenant) }}</label>
                 {{ form_widget(matiereForm.intervenant, {'attr': {'class': 'form-control'}}) }}
             </div>
+
+
+
+        <br>
 
         <input type="hidden" name="_csrf_token"
                value="{{ csrf_token('authenticate') }}"
@@ -36,3 +44,17 @@
         {{ form_end(matiereForm) }}
     </div>
 {% endblock %}
+
+
+
+
+
+{#{% block content %}#}
+{#    <div class="container mt-3">#}
+{#        <h1 class="mb-3">{{ title }}</h1>#}
+{#    </div>#}
+
+{#    <div class="form-control">#}
+{#        {{ form(matiereForm) }}#}
+{#    </div>#}
+{#{% endblock %}#}

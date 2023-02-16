@@ -27,6 +27,9 @@ class Matiere
     #[ORM\OneToMany(mappedBy: 'Matiere', targetEntity: Cours::class)]
     private Collection $cours;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    public ?string $couleur_calendrier = null;
+
     public function __construct()
     {
         $this->cours = new ArrayCollection();
@@ -99,6 +102,18 @@ class Matiere
                 $cour->setMatiere(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCouleurCalendrier(): ?string
+    {
+        return $this->couleur_calendrier;
+    }
+
+    public function setCouleurCalendrier(?string $couleur_calendrier): self
+    {
+        $this->couleur_calendrier = $couleur_calendrier;
 
         return $this;
     }

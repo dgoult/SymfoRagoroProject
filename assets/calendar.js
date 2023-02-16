@@ -30,10 +30,12 @@ document.addEventListener("DOMContentLoaded", () => {
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
         },
-        initialView: "dayGridMonth",
+        initialView: "timeGridWeek",
+        locale: 'fr',
         navLinks: true, // can click day/week names to navigate views
         plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
         timeZone: "UTC",
+        weekends: false,
     });
 
     calendar.render();

@@ -1,6 +1,7 @@
 {% block calendar %}
-    <a href="{{ path('app_cours_new') }}">Create new booking</a>
-
+    <a class="btn btn-primary" href="{{ path('cours_new') }}">Ajouter un cours</a>
+    <br />
+    <br />
     <div
         id="calendar-holder"
         data-events-url="{{ path('fc_load_events') }}"
