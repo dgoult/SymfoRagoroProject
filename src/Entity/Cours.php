@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\CoursRepository;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -33,6 +35,14 @@ class Cours
     #[ORM\ManyToOne(inversedBy: 'cours')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Matiere $Matiere = null;
+
+    #[ORM\OneToMany(mappedBy: 'cours', targetEntity: CommentaireCours::class)]
+    private Collection $commentaireCours;
+
+    public function __construct()
+    {
+        $this->commentaireCours = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -117,6 +127,36 @@ class Cours
     public function setMatiere(?Matiere $Matiere): self
     {
         $this->Matiere = $Matiere;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentaireCours>
+     */
+    public function getCommentaireCours(): Collection
+    {
+        return $this->commentaireCours;
+    }
+
+    public function addCommentaireCour(CommentaireCours $commentaireCour): self
+    {
+        if (!$this->commentaireCours->contains($commentaireCour)) {
+            $this->commentaireCours->add($commentaireCour);
+            $commentaireCour->setCours($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaireCour(CommentaireCours $commentaireCour): self
+    {
+        if ($this->commentaireCours->removeElement($commentaireCour)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaireCour->getCours() === $this) {
+                $commentaireCour->setCours(null);
+            }
+        }
 
         return $this;
     }

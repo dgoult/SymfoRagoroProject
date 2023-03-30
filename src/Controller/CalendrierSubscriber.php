@@ -63,8 +63,8 @@ class CalendrierSubscriber implements EventSubscriberInterface
              */
 
             $coursEvent->setOptions([
-                'backgroundColor' => 'red',
-                'borderColor' => 'red',
+                'backgroundColor' => $cour->getMatiere()->getCouleurCalendrier(),
+                'borderColor' => 'black',
             ]);
             $coursEvent->addOption(
                 'url',
