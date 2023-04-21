@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\CommentaireCours;
+use App\Entity\Cours;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\MakerBundle\Doctrine\EntityRelation;
 use Symfony\Bundle\MakerBundle\Doctrine\RelationOneToOne;
@@ -17,7 +18,10 @@ class CommentaireCoursType extends AbstractType
     {
         $builder
             ->add('commentaire_text', TextType::class)
-            ->add('cours', EntityType::class)
+            ->add('cours', EntityType::class, [
+                'class' => Cours::class,
+                'choice_label' => 'nom'
+            ])
         ;
     }
 

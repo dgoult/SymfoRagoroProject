@@ -6,7 +6,6 @@ import listPlugin from "@fullcalendar/list";
 // import "./index.css"; // this will create a calendar.css file reachable to 'encore_entry_link_tags'
 
 import jquery from 'jquery';
-import * as calEvent from "@popperjs/core";
 window.$ = window.jQuery = jquery;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -45,13 +44,58 @@ document.addEventListener("DOMContentLoaded", () => {
             info.jsEvent.preventDefault();
             let calEvent = info.event;
 
-            $('#calendarModal .modal-body').html('<p><strong>Cours:</strong> ' + calEvent.title + '</p>' +
-                '<p><strong>Début:</strong> ' + calEvent.start + '</p>' +
-                '<p><strong>Fin:</strong> ' + calEvent.end + '</p>' +
-                '<p><strong>Description:</strong> ' + calEvent.extendedProps.description + '</p>' +
-                '<p>Voir les <a href="' + calEvent.url + '">détails</a></p>'
-            );
+            var modal = $('<div>').addClass('modal fade').attr({
+                id: 'calendarModal',
+                tabindex: '-1',
+                role: 'dialog',
+                'aria-labelledby': 'calendarModalLabel',
+                'aria-hidden': 'true'
+            }).appendTo('body');
+            var modalDialog = $('<div>').addClass('modal-dialog').attr('role', 'document').appendTo(modal);
+            var modalContent = $('<div>').addClass('modal-content').appendTo(modalDialog);
+
+
+            // add the form to the modal window
+            $.ajax({
+                url: '/event/' + info.event.id + '/comment',
+                method: 'GET',
+                success: function(response) {
+                    modalContent.html(response);
+
+                    // initialize the form
+                    var form = modalContent.find('form');
+                    form.attr('action', '/event/' + info.event.id + '/comment');
+                    form.attr('method', 'POST');
+                    form.on('submit', function(e) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: form.attr('action'),
+                            method: form.attr('method'),
+                            data: form.serialize(),
+                            success: function(response) {
+                                // handle successful form submission
+                                calendar.refetchEvents();
+                                modal.modal('hide');
+                            },
+                            error: function(response) {
+                                // handle form submission errors
+                                console.log(response);
+                            }
+                        });
+                    });
+
+                    // show the modal window
+                    modal.modal('show');
+                },
+                error: function(response) {
+                    // handle form loading errors
+                    console.log(response);
+                }
+            });
+
             $('#calendarModal').modal('show');
+
+
         }
     });
 

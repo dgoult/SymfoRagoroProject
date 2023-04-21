@@ -18,6 +18,20 @@
                 </div>
                 <div class="modal-body">
                     <!-- Event details will be added here -->
+
+                    <div class="container">
+                        {{ form_start(form) }}
+                            <div class="form-group">
+                                {{ form_label(form.commentaire_text, 'Comment') }}
+                                {{ form_widget(form.commentaire_text, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.cours, 'Cours') }}
+                                {{ form_widget(form.cours, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        {{ form_end(form) }}
+                    </div>
                 </div>
             </div>
         </div>
