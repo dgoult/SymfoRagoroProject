@@ -3,8 +3,11 @@ import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
-
 // import "./index.css"; // this will create a calendar.css file reachable to 'encore_entry_link_tags'
+
+import jquery from 'jquery';
+import * as calEvent from "@popperjs/core";
+window.$ = window.jQuery = jquery;
 
 document.addEventListener("DOMContentLoaded", () => {
     let calendarEl = document.getElementById("calendar-holder");
@@ -32,13 +35,24 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         initialView: "timeGridWeek",
         locale: 'fr',
-        navLinks: true, // can click day/week names to navigate views
+        //navLinks: true, // can click day/week names to navigate views
         plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
         timeZone: "UTC",
         weekends: false,
-        dayClick: function(date, jsEvent, view) {
-            $("#calendarModal").modal("show");
-        },
+
+        eventClick: function(info) {
+            // permet d'empêcher l'ouverture du lien dans la property 'url'
+            info.jsEvent.preventDefault();
+            let calEvent = info.event;
+
+            $('#calendarModal .modal-body').html('<p><strong>Cours:</strong> ' + calEvent.title + '</p>' +
+                '<p><strong>Début:</strong> ' + calEvent.start + '</p>' +
+                '<p><strong>Fin:</strong> ' + calEvent.end + '</p>' +
+                '<p><strong>Description:</strong> ' + calEvent.extendedProps.description + '</p>' +
+                '<p>Voir les <a href="' + calEvent.url + '">détails</a></p>'
+            );
+            $('#calendarModal').modal('show');
+        }
     });
 
     calendar.render();

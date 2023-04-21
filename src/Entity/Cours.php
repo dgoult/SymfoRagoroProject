@@ -20,12 +20,6 @@ class Cours
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?DateTimeInterface $date_debut = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?DateTimeInterface $date_fin = null;
-
     #[ORM\Column]
     private ?int $duree_minutes = null;
 
@@ -38,6 +32,16 @@ class Cours
 
     #[ORM\OneToMany(mappedBy: 'cours', targetEntity: CommentaireCours::class)]
     private Collection $commentaireCours;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $date_cours;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $heure_debut;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $heure_fin;
+    
 
     public function __construct()
     {
@@ -63,36 +67,51 @@ class Cours
 
     public function getDateDebut(): ?DateTimeInterface
     {
-        return $this->date_debut;
+        $date = $this->date_cours;
+        $time = $this->heure_debut;
+
+        return $date->setTime(
+            $time->format('H'),
+            $time->format('i'),
+            $time->format('s')
+        );
     }
 
     public function getDateDebutString(): ?string
     {
-        return $this->date_debut->format('Y-m-d H:i:s');
+        $date = $this->date_cours;
+        $time = $this->heure_debut;
+
+        return $date->setTime(
+            $time->format('H'),
+            $time->format('i'),
+            $time->format('s')
+        )->format('Y-m-d H:i:s');
     }
 
-    public function setDateDebut(DateTimeInterface $date_debut): self
-    {
-        $this->date_debut = $date_debut;
-
-        return $this;
-    }
 
     public function getDateFin(): ?DateTimeInterface
     {
-        return $this->date_fin;
+        $date = $this->date_cours;
+        $time = $this->heure_fin;
+
+        return $date->setTime(
+            $time->format('H'),
+            $time->format('i'),
+            $time->format('s')
+        );
     }
 
     public function getDateFinString(): ?string
     {
-        return $this->date_fin->format('Y-m-d H:i:s');
-    }
+        $date = $this->date_cours;
+        $time = $this->heure_fin;
 
-    public function setDateFin(DateTimeInterface $date_fin): self
-    {
-        $this->date_fin = $date_fin;
-
-        return $this;
+        return $date->setTime(
+            $time->format('H'),
+            $time->format('i'),
+            $time->format('s')
+        )->format('Y-m-d H:i:s');
     }
 
     public function getDureeMinutes(): ?int
@@ -139,7 +158,7 @@ class Cours
         return $this->commentaireCours;
     }
 
-    public function addCommentaireCour(CommentaireCours $commentaireCour): self
+    public function addCommentaireCours(CommentaireCours $commentaireCour): self
     {
         if (!$this->commentaireCours->contains($commentaireCour)) {
             $this->commentaireCours->add($commentaireCour);
@@ -149,7 +168,7 @@ class Cours
         return $this;
     }
 
-    public function removeCommentaireCour(CommentaireCours $commentaireCour): self
+    public function removeCommentaireCours(CommentaireCours $commentaireCour): self
     {
         if ($this->commentaireCours->removeElement($commentaireCour)) {
             // set the owning side to null (unless already changed)
@@ -160,4 +179,45 @@ class Cours
 
         return $this;
     }
+
+    public function getDateCours(): ?DateTimeInterface
+    {
+        return $this->date_cours;
+    }
+
+    public function setDateCours(DateTimeInterface $date_cours): self
+    {
+        $this->date_cours = $date_cours;
+
+        return $this;
+    }
+
+    public function getHeureDebut(): ?DateTimeInterface
+    {
+        return $this->heure_debut;
+    }
+
+    public function setHeureDebut(DateTimeInterface $heure_debut): self
+    {
+        $this->heure_debut = $heure_debut;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getHeureFin(): ?DateTimeInterface
+    {
+        return $this->heure_fin;
+    }
+
+    /**
+     * @param DateTimeInterface|null $heure_fin
+     */
+    public function setHeureFin(?DateTimeInterface $heure_fin): void
+    {
+        $this->heure_fin = $heure_fin;
+    }
+
 }
