@@ -36,6 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
         plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
         timeZone: "UTC",
         weekends: false,
+        dayClick: function(date, jsEvent, view) {
+            $("#calendarModal").modal("show");
+        },
     });
 
     calendar.render();
