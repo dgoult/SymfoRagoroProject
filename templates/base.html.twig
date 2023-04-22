@@ -26,6 +26,11 @@
         {{ message }}
     </div>
 {% endfor %}
+{% for message in app.flashes('errors') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
 <br>
 <div class="container-md">
     {% block body %}{% endblock %}

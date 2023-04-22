@@ -43,18 +43,22 @@ document.addEventListener("DOMContentLoaded", () => {
             // permet d'empêcher l'ouverture du lien dans la property 'url'
             info.jsEvent.preventDefault();
 
-            var modal = $('<div>').addClass('modal fade').attr({
-                id: 'calendarModal',
-                tabindex: '-1',
-                role: 'dialog',
-                'aria-labelledby': 'calendarModalLabel',
-                'aria-hidden': 'true'
-            }).appendTo('body');
-            var modalDialog = $('<div>').addClass('modal-dialog').attr('role', 'document').appendTo(modal);
-            var modalContent = $('<div>').addClass('modal-content').appendTo(modalDialog);
+            var modal = $('#calendarModal');
 
-            var form = modalContent.find('form');
-            form.attr('action', '/cours/' + info.event.id + '/comment');
+            // var modal = $('<div>').addClass('modal fade').attr({
+            //     id: 'calendarModal',
+            //     tabindex: '-1',
+            //     role: 'dialog',
+            //     'aria-labelledby': 'calendarModalLabel',
+            //     'aria-hidden': 'true'
+            // }).appendTo('body');
+            // var modalDialog = $('<div>').addClass('modal-dialog').attr('role', 'document').appendTo(modal);
+            // var modalContent = $('<div>').addClass('modal-content').appendTo(modalDialog);
+
+            console.log(info.event);
+
+            var form = modal.find('form');
+            form.attr('action', info.event.url);
             form.attr('method', 'POST');
             form.on('submit', function(e) {
                 e.preventDefault();
@@ -74,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             });
             // show the modal window
-            $('#calendarModal').modal('show');
+            modal.modal('show');
 
         }
 

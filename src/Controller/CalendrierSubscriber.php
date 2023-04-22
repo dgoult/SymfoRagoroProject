@@ -68,14 +68,13 @@ class CalendrierSubscriber implements EventSubscriberInterface
              * and: https://github.com/fullcalendar/fullcalendar/blob/master/src/core/options.ts
              */
 
-            $coursEvent->addOption('id', $cour->getId());
             $coursEvent->setOptions([
                 'backgroundColor' => $cour->getMatiere()->getCouleurCalendrier(),
                 'borderColor' => 'black',
             ]);
             $coursEvent->addOption(
                 'url',
-                $this->router->generate('app_cours_show', [
+                $this->router->generate('cours_create_commentaire', [
                     'id' => $cour->getId(),
                 ])
             );

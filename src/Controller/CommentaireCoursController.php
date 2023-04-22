@@ -22,22 +22,18 @@ class CommentaireCoursController extends AbstractController
     }
 
     #[Route('/cours/{id}/comment', name: 'cours_create_commentaire', methods: ['POST'])]
-    public function create(Request $request, $id): JsonResponse
+    public function create(CommentaireCourRepository $repository, Request $request, $id): JsonResponse
     {
         $event = $this->doctrine->getRepository(Cours::class)->find($id);
-
-        $comment = new CommentaireCours();
-        $comment->setCours($event);
 
         $form = $this->createForm(CommentaireCoursType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $comment = $form->getData();
+            $comment->setCours($event);
             $comment->setStatus(0);
-            $entityManager = $this->doctrine->getManager();
-            $entityManager->persist($comment);
-            $entityManager->flush();
+            $repository->save($comment);
 
             return new JsonResponse([
                 'success' => true,

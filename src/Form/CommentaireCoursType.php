@@ -18,10 +18,6 @@ class CommentaireCoursType extends AbstractType
     {
         $builder
             ->add('commentaire_text', TextType::class)
-            ->add('cours', EntityType::class, [
-                'class' => Cours::class,
-                'choice_label' => 'nom'
-            ])
         ;
     }
 
