@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
         eventClick: function(info) {
             // permet d'empêcher l'ouverture du lien dans la property 'url'
             info.jsEvent.preventDefault();
-            let calEvent = info.event;
 
             var modal = $('<div>').addClass('modal fade').attr({
                 id: 'calendarModal',
@@ -54,49 +53,31 @@ document.addEventListener("DOMContentLoaded", () => {
             var modalDialog = $('<div>').addClass('modal-dialog').attr('role', 'document').appendTo(modal);
             var modalContent = $('<div>').addClass('modal-content').appendTo(modalDialog);
 
-
-            // add the form to the modal window
-            $.ajax({
-                url: '/event/' + info.event.id + '/comment',
-                method: 'GET',
-                success: function(response) {
-                    modalContent.html(response);
-
-                    // initialize the form
-                    var form = modalContent.find('form');
-                    form.attr('action', '/event/' + info.event.id + '/comment');
-                    form.attr('method', 'POST');
-                    form.on('submit', function(e) {
-                        e.preventDefault();
-                        $.ajax({
-                            url: form.attr('action'),
-                            method: form.attr('method'),
-                            data: form.serialize(),
-                            success: function(response) {
-                                // handle successful form submission
-                                calendar.refetchEvents();
-                                modal.modal('hide');
-                            },
-                            error: function(response) {
-                                // handle form submission errors
-                                console.log(response);
-                            }
-                        });
-                    });
-
-                    // show the modal window
-                    modal.modal('show');
-                },
-                error: function(response) {
-                    // handle form loading errors
-                    console.log(response);
-                }
+            var form = modalContent.find('form');
+            form.attr('action', '/cours/' + info.event.id + '/comment');
+            form.attr('method', 'POST');
+            form.on('submit', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: form.attr('action'),
+                    method: form.attr('method'),
+                    data: form.serialize(),
+                    success: function(response) {
+                        // handle successful form submission
+                        calendar.refetchEvents();
+                        modal.modal('hide');
+                    },
+                    error: function(response) {
+                        // handle form submission errors
+                        console.log(response);
+                    }
+                });
             });
-
+            // show the modal window
             $('#calendarModal').modal('show');
 
-
         }
+
     });
 
     calendar.render();

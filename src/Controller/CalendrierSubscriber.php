@@ -52,9 +52,6 @@ class CalendrierSubscriber implements EventSubscriberInterface
             ->setParameter('end_time', $end->format('H:i:s'))
             ->getQuery()
             ->getResult();
-
-
-        ;
         
         foreach ($cours as $cour) {
             // this create the events with your data (here booking data) to fill calendar
@@ -71,6 +68,7 @@ class CalendrierSubscriber implements EventSubscriberInterface
              * and: https://github.com/fullcalendar/fullcalendar/blob/master/src/core/options.ts
              */
 
+            $coursEvent->addOption('id', $cour->getId());
             $coursEvent->setOptions([
                 'backgroundColor' => $cour->getMatiere()->getCouleurCalendrier(),
                 'borderColor' => 'black',
