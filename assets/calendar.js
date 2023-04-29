@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     comments.forEach(comment => {
                         const liElement = document.createElement('li');
-                        liElement.textContent = "'" + comment.commentaire_text + "' - Envoyé le " + comment.date_creation.date;
+                        liElement.textContent = "'" + comment.commentaire_text + "' - Envoyé le " + comment.date_creation.date + ' par ' + comment.author;
                         ulElement.appendChild(liElement);
                     });
 

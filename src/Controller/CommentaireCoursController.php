@@ -12,9 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class CommentaireCoursController extends AbstractController
 {
@@ -26,7 +24,7 @@ class CommentaireCoursController extends AbstractController
     }
 
     #[Route('/cours/{id}/comment', name: 'cours_create_commentaire', methods: ['GET','POST'])]
-    public function create(CommentaireCourRepository $repository, Request $request, $id): JsonResponse
+    public function create(CommentaireCourRepository $repository, Request $request, UserInterface $user, $id): JsonResponse
     {
         $event = $this->doctrine->getRepository(Cours::class)->find($id);
 
@@ -40,7 +38,7 @@ class CommentaireCoursController extends AbstractController
             $comment->setCours($event);
             $comment->setStatus(0);
             $comment->setDateCreation(new DateTime());
-            $comment->setAuthor($this->getUser());
+            $comment->setAuthor($user);
 
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($comment);

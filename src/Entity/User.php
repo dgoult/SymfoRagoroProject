@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -33,8 +35,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
-    #[ORM\OneToOne(mappedBy: 'author', cascade: ['persist', 'remove'])]
-    private ?CommentaireCours $commentairesCours = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
@@ -44,6 +44,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $civilite = null;
+
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: CommentaireCours::class)]
+    private Collection $commentaireCours;
+
+    public function __construct()
+    {
+        $this->commentaireCours = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -182,6 +190,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCivilite(string $civilite): self
     {
         $this->civilite = $civilite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentaireCours>
+     */
+    public function getCommentaireCours(): Collection
+    {
+        return $this->commentaireCours;
+    }
+
+    public function addCommentaireCour(CommentaireCours $commentaireCour): self
+    {
+        if (!$this->commentaireCours->contains($commentaireCour)) {
+            $this->commentaireCours->add($commentaireCour);
+            $commentaireCour->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaireCour(CommentaireCours $commentaireCour): self
+    {
+        if ($this->commentaireCours->removeElement($commentaireCour)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaireCour->getAuthor() === $this) {
+                $commentaireCour->setAuthor(null);
+            }
+        }
 
         return $this;
     }

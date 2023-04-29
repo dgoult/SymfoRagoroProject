@@ -49,9 +49,10 @@ class CommentaireCours implements JsonSerializable
      */
     private ?DateTimeInterface $date_creation = null;
 
-    #[ORM\OneToOne(inversedBy: 'commentairesCours', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'commentaireCours')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
+
 
     public function getId(): ?int
     {
