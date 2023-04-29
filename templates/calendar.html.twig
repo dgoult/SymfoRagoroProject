@@ -20,12 +20,19 @@
                     <!-- Event details will be added here -->
 
                     <div class="container">
+                        <h3 class="h3">Commentaires</h3>
+                        <ul id="commentaire_liste"></ul>
+                    </div>
+
+                    <div class="container">
                         {{ form_start(form) }}
                             <div class="form-group">
                                 {{ form_label(form.commentaire_text, 'Comment') }}
                                 {{ form_widget(form.commentaire_text, {'attr': {'class': 'form-control'}}) }}
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Submit</button>.
+                            </div>
                         {{ form_end(form) }}
                     </div>
                 </div>

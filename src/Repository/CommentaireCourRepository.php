@@ -54,13 +54,14 @@ class CommentaireCourRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?CommentaireCour
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findCommentaireByCoursId($id): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.cours = :coursId')
+            ->orderBy('c.date_creation')
+            ->setParameter('coursId', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

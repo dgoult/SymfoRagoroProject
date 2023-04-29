@@ -31,7 +31,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
+    private bool $isVerified = false;
+
+    #[ORM\OneToOne(mappedBy: 'author', cascade: ['persist', 'remove'])]
+    private ?CommentaireCours $commentairesCours = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $prenom = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $civilite = null;
 
     public function getId(): ?int
     {
@@ -112,6 +124,64 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getCommentairesCours(): ?CommentaireCours
+    {
+        return $this->commentairesCours;
+    }
+
+    public function setCommentairesCours(CommentaireCours $commentairesCours): self
+    {
+        // set the owning side of the relation if necessary
+        if ($commentairesCours->getAuthor() !== $this) {
+            $commentairesCours->setAuthor($this);
+        }
+
+        $this->commentairesCours = $commentairesCours;
+
+        return $this;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->civilite . ' ' . $this->nom . ' ' . $this->prenom;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getCivilite(): ?string
+    {
+        return $this->civilite;
+    }
+
+    public function setCivilite(string $civilite): self
+    {
+        $this->civilite = $civilite;
 
         return $this;
     }

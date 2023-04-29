@@ -22,9 +22,9 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstrac
         $form = $this->createForm(CommentaireCoursType::class, $commentaire);
         $form->handleRequest($request);
 
-        return $this->renderForm('admin/admin-home.html.twig', [
+        return $this->render('admin/admin-home.html.twig', [
             'title'=>'Accueil',
-            'form' => $form
+            'form' => $form->createView()
         ]);
     }
 }

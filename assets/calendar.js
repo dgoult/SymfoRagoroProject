@@ -44,20 +44,29 @@ document.addEventListener("DOMContentLoaded", () => {
             info.jsEvent.preventDefault();
 
             var modal = $('#calendarModal');
-
-            // var modal = $('<div>').addClass('modal fade').attr({
-            //     id: 'calendarModal',
-            //     tabindex: '-1',
-            //     role: 'dialog',
-            //     'aria-labelledby': 'calendarModalLabel',
-            //     'aria-hidden': 'true'
-            // }).appendTo('body');
-            // var modalDialog = $('<div>').addClass('modal-dialog').attr('role', 'document').appendTo(modal);
-            // var modalContent = $('<div>').addClass('modal-content').appendTo(modalDialog);
-
-            console.log(info.event);
-
             var form = modal.find('form');
+            var commentaireDiv = document.getElementById("commentaire_liste");
+            // On récupère les commentaire associé au cours
+
+            fetch(info.event.url)
+                .then(response => response.json())
+                .then(data => {
+                    const comments = data.comments.map(comment => JSON.parse(comment));
+                    console.log(comments);
+                    const listElement = document.getElementById('commentaire_liste');
+                    const ulElement = document.createElement('ul');
+
+                    comments.forEach(comment => {
+                        const liElement = document.createElement('li');
+                        liElement.textContent = "'" + comment.commentaire_text + "' - Envoyé le " + comment.date_creation.date;
+                        ulElement.appendChild(liElement);
+                    });
+
+                    listElement.appendChild(ulElement);
+                })
+                .catch(error => console.error(error));
+
+
             form.attr('action', info.event.url);
             form.attr('method', 'POST');
             form.on('submit', function(e) {
@@ -76,6 +85,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         console.log(response);
                     }
                 });
+            });
+
+            // A la fermeture de la modale, on retire la fonction du submit pour éviter les doublons d'envois)
+            modal.on('hidden.bs.modal', function() {
+                form.off('submit');
+                commentaireDiv.remove();
             });
             // show the modal window
             modal.modal('show');

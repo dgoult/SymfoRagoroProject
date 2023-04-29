@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230216195659 extends AbstractMigration
+final class Version20230429150709 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,14 +20,12 @@ final class Version20230216195659 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE matiere ADD couleur_calendrier VARCHAR(255) DEFAULT NULL');
-        $this->addSql('ALTER TABLE matiere RENAME INDEX idx_9014574ade94feff TO IDX_9014574AAB9A1716');
+        $this->addSql('ALTER TABLE commentaire_cours ADD date_creation DATETIME NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE matiere DROP couleur_calendrier');
-        $this->addSql('ALTER TABLE matiere RENAME INDEX idx_9014574aab9a1716 TO IDX_9014574ADE94FEFF');
+        $this->addSql('ALTER TABLE commentaire_cours DROP date_creation');
     }
 }
