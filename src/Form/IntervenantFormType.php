@@ -18,7 +18,6 @@ class IntervenantFormType extends AbstractType
             ->add('prenom', TextType::class)
             ->add('specialite_professionnelle', TextType::class)
             ->add('email', TextType::class)
-            ->add('enregistrer', SubmitType::class)
         ;
     }
 

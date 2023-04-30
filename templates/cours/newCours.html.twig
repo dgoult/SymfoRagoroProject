@@ -58,9 +58,11 @@
         <input type="hidden" name="_csrf_token"
                value="{{ csrf_token('authenticate') }}"
         >
-        <button class="btn btn-lg btn-primary" type="submit">
-            Ajouter
-        </button>
+        <div class=" mb-3">
+            <button class="btn btn-lg btn-primary" type="submit">
+                {{ action }}
+            </button>
+        </div>
 
         {{ form_end(coursForm) }}
     </div>

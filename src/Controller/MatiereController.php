@@ -45,6 +45,7 @@ class MatiereController extends AbstractController
             ['matiereForm' => $form->createView(),
                 'title' => "Création d'un matiere",
                 'matiere' => $newMatiere,
+             'action' => 'Créer'
         ]);
     }
 
@@ -71,6 +72,7 @@ class MatiereController extends AbstractController
             ['matiereForm' => $form->createView(),
              'title' => "Création d'un matiere",
              'matiere' => $matiere,
+             'action' => 'Modifier'
             ]);
     }
 
