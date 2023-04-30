@@ -6,12 +6,16 @@ use App\Entity\Cours;
 use App\Form\CoursFormType;
 use App\Form\CoursType;
 use App\Repository\CoursRepository;
+use DateTime;
+use DateTimeZone;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Timezone;
 
 class CoursController extends AbstractController
 {
@@ -69,6 +73,7 @@ class CoursController extends AbstractController
         $newCours = new Cours();
 
         $form = $this->createForm(CoursFormType::class, $newCours);
+        $form->get('date_cours')->setData(new DateTime('now',  new DateTimeZone('Europe/Paris')));
 
         $form->handleRequest($request);
 
@@ -87,8 +92,9 @@ class CoursController extends AbstractController
 
     /**
      * @Route("/cours/edit/{id}", name="cours_edit")
+     * @throws Exception
      */
-    public function editCours(Request $request, $id)
+    public function editCours(Request $request, $id): Response
     {
         $cours = $this->doctrine->getRepository(Cours::class)->find($id);
 

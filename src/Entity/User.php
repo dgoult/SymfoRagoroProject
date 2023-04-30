@@ -48,6 +48,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: CommentaireCours::class)]
     private Collection $commentaireCours;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Intervenant $intervenant = null;
+
     public function __construct()
     {
         $this->commentaireCours = new ArrayCollection();
@@ -220,6 +223,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $commentaireCour->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIntervenant(): ?Intervenant
+    {
+        return $this->intervenant;
+    }
+
+    public function setIntervenant(?Intervenant $intervenant): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($intervenant === null && $this->intervenant !== null) {
+            $this->intervenant->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($intervenant !== null && $intervenant->getUser() !== $this) {
+            $intervenant->setUser($this);
+        }
+
+        $this->intervenant = $intervenant;
 
         return $this;
     }

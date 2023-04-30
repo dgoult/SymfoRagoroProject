@@ -23,8 +23,8 @@
             {% for intervenant in intervenants %}
                 <tr>
                     <td>{{ intervenant.id }}</td>
-                    <td>{{ intervenant.nom }}</td>
-                    <td>{{ intervenant.prenom }}</td>
+                    <td>{{ intervenant.user.nom }}</td>
+                    <td>{{ intervenant.user.prenom }}</td>
                     <td>{{ intervenant.SpecialiteProfessionnelle }}</td>
                     <td>
                         <a class="btn btn-primary" href="{{ path('intervenant_edit', { 'id': intervenant.id}) }}">Modifier</a>

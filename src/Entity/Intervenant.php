@@ -16,23 +16,17 @@ class Intervenant
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $nom = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $specialite_professionnelle = null;
 
     #[ORM\OneToMany(mappedBy: 'intervenant', targetEntity: Matiere::class)]
     private Collection $matieres;
 
-    #[ORM\Column(length: 70)]
-    private ?string $prenom = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
-
     #[ORM\OneToMany(mappedBy: 'Intervenant', targetEntity: Cours::class)]
     private Collection $cours;
+
+    #[ORM\OneToOne(inversedBy: 'intervenant', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
 
     #[Pure] public function __construct()
     {
@@ -45,45 +39,9 @@ class Intervenant
         return $this->id;
     }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
-    }
-
     public function getFullName(): ?string
     {
-        return $this->nom . ' ' . $this->prenom;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
+        return $this->user->getNom() . ' ' . $this->user->getPrenom();
     }
 
     public function getSpecialiteProfessionnelle(): ?string
@@ -155,6 +113,18 @@ class Intervenant
                 $cour->setIntervenant(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
