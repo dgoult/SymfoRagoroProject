@@ -1,0 +1,28 @@
+{% extends 'admin/admin-template.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col">
+                <h2>{{ title }}</h2>
+                <div class="formation-details">
+                    <span>Date de début : {{ formation.dateDebut|format_datetime('full', 'none', locale='fr') }}</span>
+                    <br />
+                    <span>Date de fin : {{ formation.dateFin|format_datetime('full', 'none', locale='fr') }}</span>
+                </div>
+            </div>
+            <div class="col">
+                <h3>Informations</h3>
+                <div class="formation-details">
+                    <span>Nombre d'intervenant : 23</span>
+                    <span>Heures de cours restante à assigner : 598h</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

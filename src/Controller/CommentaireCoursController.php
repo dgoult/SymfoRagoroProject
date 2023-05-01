@@ -26,6 +26,18 @@ class CommentaireCoursController extends AbstractController
     #[Route('/cours/{id}/comment', name: 'cours_create_commentaire', methods: ['GET','POST'])]
     public function create(CommentaireCourRepository $repository, Request $request, UserInterface $user, $id): JsonResponse
     {
+        // En GET, on retourne la liste des commentaire du cours
+        if ($request->getMethod() == 'GET') {
+            $comments = $repository->findCommentaireByCoursId($id);
+            $commentsJson = [];
+            foreach ($comments as $comment) {
+                $commentsJson[] = json_encode($comment);
+            }
+            return new JsonResponse([
+                'comments' => $commentsJson
+            ]);
+        }
+
         $event = $this->doctrine->getRepository(Cours::class)->find($id);
 
         $comment = New CommentaireCours();
@@ -48,17 +60,10 @@ class CommentaireCoursController extends AbstractController
                 'success' => true,
                 'message' => 'Comment created successfully.',
             ]);
-        } else {
-            $comments = $repository->findCommentaireByCoursId($id);
-            $commentsJson = [];
-            foreach ($comments as $comment) {
-                $commentsJson[] = json_encode($comment);
-            }
-
-            return new JsonResponse([
-                'comments' => $commentsJson
-            ]);
         }
+        return new JsonResponse([
+            'success' => false,
+        ]);
     }
 
 //    private function getFormErrors($form): array
