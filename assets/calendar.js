@@ -43,18 +43,18 @@ document.addEventListener("DOMContentLoaded", () => {
             // permet d'empêcher l'ouverture du lien dans la property 'url'
             info.jsEvent.preventDefault();
 
-            var modal = $('#calendarModal');
-            var form = modal.find('form');
-            var commentaireDiv = document.getElementById("commentaire_liste");
-            // On récupère les commentaire associé au cours
+            let modal = $('#calendarModal');
+            let form = modal.find('form');
+            let listElement = document.getElementById('commentaire_liste');
+            let ulElement = document.createElement('ul');
 
+            // On récupère les commentaire associé au cours
             fetch(info.event.url)
                 .then(response => response.json())
                 .then(data => {
-                    const comments = data.comments.map(comment => JSON.parse(comment));
+                    let comments;
+                    comments = data.comments.map(comment => JSON.parse(comment));
                     console.log(comments);
-                    const listElement = document.getElementById('commentaire_liste');
-                    const ulElement = document.createElement('ul');
 
                     comments.forEach(comment => {
                         const liElement = document.createElement('li');
@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     listElement.appendChild(ulElement);
                 })
                 .catch(error => console.error(error));
-
 
             form.attr('action', info.event.url);
             form.attr('method', 'POST');
@@ -90,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // A la fermeture de la modale, on retire la fonction du submit pour éviter les doublons d'envois)
             modal.on('hidden.bs.modal', function() {
                 form.off('submit');
-                commentaireDiv.remove();
+                listElement.removeChild(ulElement);
             });
             // show the modal window
             modal.modal('show');

@@ -1,0 +1,40 @@
+{% extends 'admin/admin-home.html.twig' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+    <div class="container mt-3">
+        <h1 class="mb-3">{{ title }}</h1>
+    </div>
+
+    <div class="form-control">
+        {{ form_start(periodeForm) }}
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="periode_form[date_debut]" class="form-label">{{ form_label(periodeForm.date_debut) }}</label>
+                        {{ form_widget(periodeForm.date_debut, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="periode_form[date_fin]" class="form-label">{{ form_label(periodeForm.date_fin) }}</label>
+                        {{ form_widget(periodeForm.date_fin, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+
+        <div class="mb-3">
+            <label for="periode_form[type]" class="form-label">{{ form_label(periodeForm.type) }}</label>
+            {{ form_widget(periodeForm.type, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            <button class="btn btn-lg btn-primary" type="submit">
+                {{ action }}
+            </button>
+        </div>
+
+        {{ form_end(periodeForm) }}
+    </div>
+{% endblock %}

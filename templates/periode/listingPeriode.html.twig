@@ -1,0 +1,41 @@
+{% extends 'admin/admin-home.html.twig' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+    <h3>Periodes</h3>
+    <div class="d-flex justify-content-end">
+        <a class="mr-auto btn btn-primary " href="{{ path('periode_new') }}">Créer</a>
+    </div>
+    <div class="listing-periode">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Spécialité</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for periode in periodes %}
+                <tr>
+                    <td>{{ periode.id }}</td>
+                    <td>{{ periode.user.nom }}</td>
+                    <td>{{ periode.user.prenom }}</td>
+                    <td>{{ periode.SpecialiteProfessionnelle }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('periode_edit', { 'id': periode.id}) }}">Modifier</a>
+                        <a class="btn btn-danger" href="{{ path('periode_delete', { 'id': periode.id}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}
