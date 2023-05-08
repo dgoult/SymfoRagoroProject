@@ -43,10 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
             // permet d'empêcher l'ouverture du lien dans la property 'url'
             info.jsEvent.preventDefault();
 
-            let modal = $('#calendarModal');
-            let form = modal.find('form');
-            let listElement = document.getElementById('commentaire_liste');
-            let ulElement = document.createElement('ul');
+            const modal = $('#calendarModal');
+            const form = modal.find('form');
+            const listElement = document.getElementById('commentaire_liste_div');
+            const ulElement = document.createElement('ul');
+            ulElement.setAttribute('id', 'commentaire_list');
 
             // On récupère les commentaire associé au cours
             fetch(info.event.url)
@@ -89,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // A la fermeture de la modale, on retire la fonction du submit pour éviter les doublons d'envois)
             modal.on('hidden.bs.modal', function() {
                 form.off('submit');
-                listElement.removeChild(ulElement);
+                listElement.removeChild(document.getElementById("commentaire_list"));
             });
             // show the modal window
             modal.modal('show');
