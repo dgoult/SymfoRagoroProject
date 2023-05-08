@@ -90,7 +90,6 @@ class Cours
         )->format('Y-m-d H:i:s');
     }
 
-
     public function getDateFin(): ?DateTimeInterface
     {
         $date = $this->date_cours;

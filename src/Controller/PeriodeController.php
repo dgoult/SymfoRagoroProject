@@ -3,23 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Periode;
-use App\Entity\User;
 use App\Form\PeriodeFormType;
 use DateTime;
 use DateTimeZone;
-use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Timezone;
 
-use function MongoDB\BSON\toJSON;
 #[Route('/admin')]
 class PeriodeController extends AbstractController
 {

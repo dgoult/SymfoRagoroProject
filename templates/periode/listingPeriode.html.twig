@@ -13,8 +13,8 @@
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
-                <th>Prénom</th>
-                <th>Spécialité</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -23,9 +23,9 @@
             {% for periode in periodes %}
                 <tr>
                     <td>{{ periode.id }}</td>
-                    <td>{{ periode.user.nom }}</td>
-                    <td>{{ periode.user.prenom }}</td>
-                    <td>{{ periode.SpecialiteProfessionnelle }}</td>
+                    <td>{{ periode.nom }}</td>
+                    <td>{{ periode.dateDebut | format_datetime('short', 'none', locale='fr') }}</td>
+                    <td>{{ periode.dateFin | format_datetime('short', 'none', locale='fr') }}</td>
                     <td>
                         <a class="btn btn-primary" href="{{ path('periode_edit', { 'id': periode.id}) }}">Modifier</a>
                         <a class="btn btn-danger" href="{{ path('periode_delete', { 'id': periode.id}) }}">Supprimer</a>

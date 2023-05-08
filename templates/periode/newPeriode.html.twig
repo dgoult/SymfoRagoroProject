@@ -9,6 +9,11 @@
 
     <div class="form-control">
         {{ form_start(periodeForm) }}
+        <div class="mb-3">
+            <label for="periode_form[nom]" class="form-label">{{ form_label(periodeForm.nom) }}</label>
+            {{ form_widget(periodeForm.nom, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
             <div class="row">
                 <div class="col">
                     <div class="mb-3">
