@@ -9,11 +9,11 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use function MongoDB\BSON\toJSON;
 #[Route('/admin')]
 class IntervenantController extends AbstractController
 {
@@ -50,7 +50,7 @@ class IntervenantController extends AbstractController
             $entityManager->persist($newIntervenant);
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('success', 'L\'intervenant '. $user->getNom().' '.$user->getPrenom().' et sont compte utilisations ont bien été enregistrés !');
+            $this->addFlash('success', 'L\'intervenant '. $user->getNom().' '.$user->getPrenom().' et son compte utilisateur ont bien été enregistrés !');
         }
 
         return $this->render('intervenant/newIntervenant.html.twig',
@@ -123,7 +123,7 @@ class IntervenantController extends AbstractController
     /**
      * @Route("/intervenant/delete/{id}", name="intervenant_delete")
      */
-    public function deleteIntervenant(Request $request, $id)
+    public function deleteIntervenant(Request $request, $id): RedirectResponse
     {
         $entityManager = $this->doctrine->getManager();
         $entity = $entityManager->getRepository(Intervenant::class)->find($id);

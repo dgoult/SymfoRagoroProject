@@ -19,9 +19,6 @@ class Intervenant
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $specialite_professionnelle = null;
 
-    #[ORM\OneToMany(mappedBy: 'intervenant', targetEntity: Matiere::class)]
-    private Collection $matieres;
-
     #[ORM\OneToMany(mappedBy: 'Intervenant', targetEntity: Cours::class)]
     private Collection $cours;
 
@@ -30,7 +27,6 @@ class Intervenant
 
     #[Pure] public function __construct()
     {
-        $this->matieres = new ArrayCollection();
         $this->cours = new ArrayCollection();
     }
 
@@ -55,37 +51,6 @@ class Intervenant
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, Matiere>
-     */
-    public function getMatieres(): Collection
-    {
-        return $this->matieres;
-    }
-
-    public function addMatiere(Matiere $matiere): self
-    {
-        if (!$this->matieres->contains($matiere)) {
-            $this->matieres->add($matiere);
-            $matiere->setFkIntervenant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMatiere(Matiere $matiere): self
-    {
-        if ($this->matieres->removeElement($matiere)) {
-            // set the owning side to null (unless already changed)
-            if ($matiere->getFkIntervenant() === $this) {
-                $matiere->setFkIntervenant(null);
-            }
-        }
-
-        return $this;
-    }
-
 
     /**
      * @return Collection<int, Cours>

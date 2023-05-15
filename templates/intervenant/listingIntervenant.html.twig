@@ -19,20 +19,26 @@
             </tr>
             </thead>
             <tbody>
-
-            {% for intervenant in intervenants %}
+            {% if intervenants is not empty %}
+                {% for intervenant in intervenants %}
+                    <tr>
+                        <td>{{ intervenant.id }}</td>
+                        <td>{{ intervenant.user.nom }}</td>
+                        <td>{{ intervenant.user.prenom }}</td>
+                        <td>{{ intervenant.SpecialiteProfessionnelle }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ path('intervenant_edit', { 'id': intervenant.id}) }}">Modifier</a>
+                            <a class="btn btn-danger" href="{{ path('intervenant_delete', { 'id': intervenant.id}) }}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
                 <tr>
-                    <td>{{ intervenant.id }}</td>
-                    <td>{{ intervenant.user.nom }}</td>
-                    <td>{{ intervenant.user.prenom }}</td>
-                    <td>{{ intervenant.SpecialiteProfessionnelle }}</td>
                     <td>
-                        <a class="btn btn-primary" href="{{ path('intervenant_edit', { 'id': intervenant.id}) }}">Modifier</a>
-                        <a class="btn btn-danger" href="{{ path('intervenant_delete', { 'id': intervenant.id}) }}">Supprimer</a>
+                        Aucun intervenants pour le moment
                     </td>
                 </tr>
-            {% endfor %}
-
+            {% endif %}
             </tbody>
         </table>
 

@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CoursRepository::class)]
@@ -119,6 +121,15 @@ class Cours
         return $this->duree_minutes;
     }
 
+    #[Pure] #[ArrayShape(['h' => "int", 'm' => "int", 'couleur' => 'string'])] public function getDureeHeures(): array
+    {
+        return [
+            'h' => (int)floor($this->getDureeMinutes() / 60),
+            'm' => $this->getDureeMinutes() % 60,
+            'couleur' => $this->getMatiere()->getCouleurCalendrier()
+        ];
+    }
+
     public function setDureeMinutes(int $duree_minutes): self
     {
         $this->duree_minutes = $duree_minutes;
@@ -218,6 +229,10 @@ class Cours
     public function setHeureFin(?DateTimeInterface $heure_fin): void
     {
         $this->heure_fin = $heure_fin;
+    }
+
+    public function serialize() {
+
     }
 
 }

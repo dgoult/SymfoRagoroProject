@@ -8,17 +8,18 @@ use App\Form\MatiereFormType;
 use App\Form\IntervenantFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function MongoDB\BSON\toJSON;
 
 class MatiereController extends AbstractController
 {
     public ManagerRegistry $doctrine;
 
-    function __construct( ManagerRegistry $doctrine ){
-        $this->doctrine = $doctrine ;
+    function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -29,24 +30,26 @@ class MatiereController extends AbstractController
         $newMatiere = new Matiere();
 
         $form = $this->createForm(MatiereFormType::class, $newMatiere);
-
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $newMatiere = $form->getData();
 
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($newMatiere);
             $entityManager->flush();
-            $this->addFlash('success', 'Le matiere '. $newMatiere->getIntitule().' à été enregistré avec succés');
+            $this->addFlash('success', 'Le matiere ' . $newMatiere->getIntitule() . ' à été enregistré avec succés');
         }
 
-        return $this->render('matiere/newMatiere.html.twig',
-            ['matiereForm' => $form->createView(),
-                'title' => "Création d'un matiere",
-                'matiere' => $newMatiere,
-             'action' => 'Créer'
-        ]);
+        return $this->render(
+            'matiere/newMatiere.html.twig',
+            [
+                'matiereForm' => $form->createView(),
+                'title'       => "Création d'un matiere",
+                'matiere'     => $newMatiere,
+                'action'      => 'Créer'
+            ]
+        );
     }
 
     /**
@@ -60,20 +63,23 @@ class MatiereController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $matiere = $form->getData();
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($matiere);
             $entityManager->flush();
-            $this->addFlash('success', 'Le matiere '.$matiere->getIntitule().' à été modifié avec succés');
+            $this->addFlash('success', 'Le matiere ' . $matiere->getIntitule() . ' à été modifié avec succés');
         }
 
-        return $this->render('matiere/newMatiere.html.twig',
-            ['matiereForm' => $form->createView(),
-             'title' => "Création d'un matiere",
-             'matiere' => $matiere,
-             'action' => 'Modifier'
-            ]);
+        return $this->render(
+            'matiere/newMatiere.html.twig',
+            [
+                'matiereForm' => $form->createView(),
+                'title'       => "Création d'un matiere",
+                'matiere'     => $matiere,
+                'action'      => 'Modifier'
+            ]
+        );
     }
 
     /**
@@ -88,15 +94,14 @@ class MatiereController extends AbstractController
 
         return $this->render('matiere/listingMatiere.html.twig', [
             'matieres' => $matiere,
-            'title' => 'Liste des intervenants'
+            'title'    => 'Liste des intervenants'
         ]);
-
     }
 
     /**
      * @Route("/matiere/delete/{id}", name="matiere_delete")
      */
-    public function deleteMatiere(Request $request, $id)
+    public function deleteMatiere(Request $request, $id): RedirectResponse
     {
         $entityManager = $this->doctrine->getManager();
         $entity = $entityManager->getRepository(Matiere::class)->find($id);
@@ -106,6 +111,5 @@ class MatiereController extends AbstractController
         $entityManager->remove($entity);
         $entityManager->flush();
         return $this->redirectToRoute('matiere_list');
-
     }
 }

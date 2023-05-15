@@ -6,6 +6,7 @@ use App\Repository\MatiereRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: MatiereRepository::class)]
 class Matiere
@@ -21,16 +22,13 @@ class Matiere
     #[ORM\Column]
     private ?int $duree = null;
 
-    #[ORM\ManyToOne(inversedBy: 'matieres')]
-    private ?Intervenant $intervenant = null;
-
     #[ORM\OneToMany(mappedBy: 'Matiere', targetEntity: Cours::class)]
     private Collection $cours;
 
     #[ORM\Column(length: 255, nullable: true)]
     public ?string $couleur_calendrier = null;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->cours = new ArrayCollection();
     }
@@ -60,18 +58,6 @@ class Matiere
     public function setDuree(int $duree): self
     {
         $this->duree = $duree;
-
-        return $this;
-    }
-
-    public function getIntervenant(): ?Intervenant
-    {
-        return $this->intervenant;
-    }
-
-    public function setIntervenant(?Intervenant $intervenant): self
-    {
-        $this->intervenant = $intervenant;
 
         return $this;
     }
@@ -117,4 +103,5 @@ class Matiere
 
         return $this;
     }
+
 }

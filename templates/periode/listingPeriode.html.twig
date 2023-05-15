@@ -19,20 +19,26 @@
             </tr>
             </thead>
             <tbody>
-
-            {% for periode in periodes %}
+            {% if periodes is not empty %}
+                {% for periode in periodes %}
+                    <tr>
+                        <td>{{ periode.id }}</td>
+                        <td>{{ periode.nom }}</td>
+                        <td>{{ periode.dateDebut | format_datetime('short', 'none', locale='fr') }}</td>
+                        <td>{{ periode.dateFin | format_datetime('short', 'none', locale='fr') }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ path('periode_edit', { 'id': periode.id}) }}">Modifier</a>
+                            <a class="btn btn-danger" href="{{ path('periode_delete', { 'id': periode.id}) }}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
                 <tr>
-                    <td>{{ periode.id }}</td>
-                    <td>{{ periode.nom }}</td>
-                    <td>{{ periode.dateDebut | format_datetime('short', 'none', locale='fr') }}</td>
-                    <td>{{ periode.dateFin | format_datetime('short', 'none', locale='fr') }}</td>
                     <td>
-                        <a class="btn btn-primary" href="{{ path('periode_edit', { 'id': periode.id}) }}">Modifier</a>
-                        <a class="btn btn-danger" href="{{ path('periode_delete', { 'id': periode.id}) }}">Supprimer</a>
+                        Aucun cours pour le moment
                     </td>
                 </tr>
-            {% endfor %}
-
+            {% endif %}
             </tbody>
         </table>
 

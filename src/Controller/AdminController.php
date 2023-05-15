@@ -4,12 +4,16 @@ namespace App\Controller;
 
 use App\Entity\CommentaireCours;
 use App\Form\CommentaireCoursType;
+use App\Helper\ReportingHelper;
+use App\Repository\CoursRepository;
 use App\Repository\FormationRepository;
+use App\Repository\IntervenantRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
+class AdminController extends AbstractController
 {
     #[Route('admin', name: 'admin_home', methods: ['GET'])]
     public function home(Request $request): Response
@@ -28,12 +32,15 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstrac
     }
 
     #[Route('/admin/formation-details', name: 'admin_formation', methods: ['GET'])]
-    public function showFormationDetails(Request $request, FormationRepository $repository) {
-        $formation = $repository->findAll()[0];
+    public function showFormationDetails(Request $request, FormationRepository $formationRepository, CoursRepository $coursRepository, IntervenantRepository $intervenantRepository) {
+        $formation = $formationRepository->find(1);
+        $totalHoursCours = $coursRepository->getTotalHours();
 
         return $this->render('admin/formationDetails.html.twig', [
             'title' => 'Details Formation',
-            'formation' => $formation
+            'formation' => $formation,
+            'dureeTotalCours' => $totalHoursCours,
+            'statsIntervenant' => ReportingHelper::statsIntervenant($intervenantRepository)
         ]);
     }
 }

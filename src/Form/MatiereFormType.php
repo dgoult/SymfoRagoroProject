@@ -21,11 +21,6 @@ class MatiereFormType extends AbstractType
             ->add('couleur_calendrier', ColorType::class, [
                 'label' => 'Couleur'
             ])
-            ->add('intervenant', EntityType::class, [
-                'class' => Intervenant::class,
-                'choice_label' => 'FullName'
-            ])
-
         ;
     }
 

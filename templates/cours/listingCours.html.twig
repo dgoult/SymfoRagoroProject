@@ -21,21 +21,27 @@
             </tr>
             </thead>
             <tbody>
-
-            {% for cour in cours %}
+            {% if cours is not empty %}
+                {% for cour in cours %}
+                    <tr>
+                        <td>{{ cour.id }}</td>
+                        <td>{{ cour.nom }}</td>
+                        <td>{{ cour.dateDebutString }}</td>
+                        <td>{{ cour.dateFinString }}</td>
+                        <td>{{ cour.dureeMinutes }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ path('cours_edit', { 'id': cour.id}) }}">Modifier</a>
+                            <a class="btn btn-danger" href="{{ path('cours_delete', { 'id': cour.id}) }}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
                 <tr>
-                    <td>{{ cour.id }}</td>
-                    <td>{{ cour.nom }}</td>
-                    <td>{{ cour.dateDebutString }}</td>
-                    <td>{{ cour.dateFinString }}</td>
-                    <td>{{ cour.dureeMinutes }}</td>
                     <td>
-                        <a class="btn btn-primary" href="{{ path('cours_edit', { 'id': cour.id}) }}">Modifier</a>
-                        <a class="btn btn-danger" href="{{ path('cours_delete', { 'id': cour.id}) }}">Supprimer</a>
+                        Aucun cours pour le moment
                     </td>
                 </tr>
-            {% endfor %}
-
+            {% endif %}
             </tbody>
         </table>
 

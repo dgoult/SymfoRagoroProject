@@ -12,27 +12,31 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Nom</th>
-                <th>Date début</th>
-                <th>Date fin</th>
+                <th>Intitulé</th>
                 <th>Durée</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-
-            {% for matiere in matieres %}
+            {% if matieres is not empty %}
+                {% for matiere in matieres %}
+                    <tr>
+                        <td>{{ matiere.id }}</td>
+                        <td>{{ matiere.intitule }}</td>
+                        <td>{{ matiere.duree }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ path('matiere_edit', { 'id': matiere.id}) }}">Modifier</a>
+                            <a class="btn btn-danger" href="{{ path('matiere_delete', { 'id': matiere.id}) }}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
                 <tr>
-                    <td>{{ matiere.id }}</td>
-                    <td>{{ matiere.intitule }}</td>
-                    <td>{{ matiere.duree }}</td>
                     <td>
-                        <a class="btn btn-primary" href="{{ path('matiere_edit', { 'id': matiere.id}) }}">Modifier</a>
-                        <a class="btn btn-danger" href="{{ path('matiere_delete', { 'id': matiere.id}) }}">Supprimer</a>
+                        Aucune matières pour le moment
                     </td>
                 </tr>
-            {% endfor %}
-
+            {% endif %}
             </tbody>
         </table>
 
