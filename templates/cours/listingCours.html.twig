@@ -1,0 +1,44 @@
+{% extends 'admin/admin-home.html.twig' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+    <h3>Cours</h3>
+    <div class="listing-cour">
+        <div class="d-flex justify-content-end">
+            <a class="mr-auto btn btn-primary " href="{{ path('cours_new') }}">Créer</a>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <th>Durée</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for cour in cours %}
+                <tr>
+                    <td>{{ cour.id }}</td>
+                    <td>{{ cour.nom }}</td>
+                    <td>{{ cour.dateDebutString }}</td>
+                    <td>{{ cour.dateFinString }}</td>
+                    <td>{{ cour.dureeMinutes }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('cours_edit', { 'id': cour.id}) }}">Modifier</a>
+                        <a class="btn btn-danger" href="{{ path('cours_delete', { 'id': cour.id}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'admin/admin-template.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('calendar') }}
+{% endblock %}
+
+{% block content %}
+    {% include 'calendar.html.twig' %}
+{% endblock %}

@@ -1,36 +1,44 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin-home.html.twig' %}
 {% block title %}
     {{ title }}
 {% endblock %}
-{% block body %}
-    <div class="container mt-5">
-    <h1 class="mb-3">{{ title }}</h1>
+{% block content %}
+    <div class="container mt-3">
+        <h1 class="mb-3">{{ title }}</h1>
+    </div>
 
     <div class="form-control">
         {{ form_start(intervenantForm) }}
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="intervenant_form[name]" class="form-label">{{ form_label(intervenantForm.name) }}</label>
-                    {{ form_widget(intervenantForm.name, {'attr': {'class': 'form-control'}}) }}
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="intervenant_form[nom]" class="form-label">{{ form_label(intervenantForm.nom) }}</label>
+                        {{ form_widget(intervenantForm.nom, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="intervenant_form[prenom]" class="form-label">{{ form_label(intervenantForm.prenom) }}</label>
+                        {{ form_widget(intervenantForm.prenom, {'attr': {'class': 'form-control'}}) }}
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="mb-3">
-                    <label for="intervenant_form[prenom]" class="form-label">{{ form_label(intervenantForm.prenom) }}</label>
-                    {{ form_widget(intervenantForm.prenom, {'attr': {'class': 'form-control'}}) }}
-                </div>
+
+        <div class="mb-3">
+            <label for="intervenant_form[email]" class="form-label">{{ form_label(intervenantForm.email) }}</label>
+            {{ form_widget(intervenantForm.email, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+            <div class="mb-3">
+                <label for="intervenant_form[specialite_professionnelle]" class="form-label">{{ form_label(intervenantForm.specialite_professionnelle) }}</label>
+                {{ form_widget(intervenantForm.specialite_professionnelle, {'attr': {'class': 'form-control'}}) }}
             </div>
-        </div>
 
-        <div class="mb-3">
-            <label for="intervenant_form[specialiteprofessionnelle]" class="form-label">{{ form_label(intervenantForm.specialiteprofessionnelle) }}</label>
-            {{ form_widget(intervenantForm.specialiteprofessionnelle, {'attr': {'class': 'form-control'}}) }}
-        </div>
-
-        <div class="mb-3">
-            {{ form_row(intervenantForm.enregistrer, {'attr': {'class': 'btn btn-primary', 'type': 'submit'}}) }}
-        </div>
+            <div class="mb-3">
+                <button class="btn btn-lg btn-primary" type="submit">
+                    {{ action }}
+                </button>
+            </div>
 
         {{ form_end(intervenantForm) }}
     </div>

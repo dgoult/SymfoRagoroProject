@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-2">
+            <h2>Menu Admin</h2>
+            <div>
+                <a href="{{ path('admin_home') }}">Accueil Admin</a><br/>
+                <strong>Intervenant</strong>
+                <ul>
+                    <li><a href="{{ path('intervenant_list') }}">Liste</a></li>
+                    <li><a href="{{ path('intervenant_new') }}">Créer</a></li>
+                </ul>
+                <strong>Cours</strong>
+                <ul>
+                    <li><a href="{{ path('cours_list') }}">Liste</a></li>
+                    <li><a href="{{ path('cours_new') }}">Créer</a></li>
+                </ul>
+                <strong>Matiere</strong>
+                <ul>
+                    <li><a href="{{ path('matiere_list') }}">Liste</a></li>
+                    <li><a href="{{ path('matiere_new') }}">Créer</a></li>
+                </ul>
+                <strong>Periode</strong>
+                <ul>
+                    <li><a href="{{ path('periode_list') }}">Liste</a></li>
+                    <li><a href="{{ path('periode_new') }}">Créer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

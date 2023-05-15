@@ -16,21 +16,22 @@ class Intervenant
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $name = null;
-
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $specialiteprofessionnelle = null;
+    private ?string $specialite_professionnelle = null;
 
-    #[ORM\OneToMany(mappedBy: 'fk_intervenant', targetEntity: Matiere::class)]
+    #[ORM\OneToMany(mappedBy: 'intervenant', targetEntity: Matiere::class)]
     private Collection $matieres;
 
-    #[ORM\Column(length: 70)]
-    private ?string $prenom = null;
+    #[ORM\OneToMany(mappedBy: 'Intervenant', targetEntity: Cours::class)]
+    private Collection $cours;
+
+    #[ORM\OneToOne(inversedBy: 'intervenant', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
 
     #[Pure] public function __construct()
     {
         $this->matieres = new ArrayCollection();
+        $this->cours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -38,26 +39,19 @@ class Intervenant
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getFullName(): ?string
     {
-        return $this->name;
+        return $this->user->getNom() . ' ' . $this->user->getPrenom();
     }
 
-    public function setName(string $name): self
+    public function getSpecialiteProfessionnelle(): ?string
     {
-        $this->name = $name;
-
-        return $this;
+        return $this->specialite_professionnelle;
     }
 
-    public function getSpecialiteprofessionnelle(): ?string
+    public function setSpecialiteProfessionnelle(?string $specialite_professionnelle): self
     {
-        return $this->specialiteprofessionnelle;
-    }
-
-    public function setSpecialiteprofessionnelle(?string $specialiteprofessionnelle): self
-    {
-        $this->specialiteprofessionnelle = $specialiteprofessionnelle;
+        $this->specialite_professionnelle = $specialite_professionnelle;
 
         return $this;
     }
@@ -92,14 +86,45 @@ class Intervenant
         return $this;
     }
 
-    public function getPrenom(): ?string
+
+    /**
+     * @return Collection<int, Cours>
+     */
+    public function getCours(): Collection
     {
-        return $this->prenom;
+        return $this->cours;
     }
 
-    public function setPrenom(string $prenom): self
+    public function addCour(Cours $cour): self
     {
-        $this->prenom = $prenom;
+        if (!$this->cours->contains($cour)) {
+            $this->cours->add($cour);
+            $cour->setIntervenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCour(Cours $cour): self
+    {
+        if ($this->cours->removeElement($cour)) {
+            // set the owning side to null (unless already changed)
+            if ($cour->getIntervenant() === $this) {
+                $cour->setIntervenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

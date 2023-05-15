@@ -1,0 +1,41 @@
+{% extends 'admin/admin-home.html.twig' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+    <h3>Matière</h3>
+    <div class="d-flex justify-content-end">
+        <a class="mr-auto btn btn-primary " href="{{ path('matiere_new') }}">Créer</a>
+    </div>
+    <div class="listing-matiere">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <th>Durée</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for matiere in matieres %}
+                <tr>
+                    <td>{{ matiere.id }}</td>
+                    <td>{{ matiere.intitule }}</td>
+                    <td>{{ matiere.duree }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('matiere_edit', { 'id': matiere.id}) }}">Modifier</a>
+                        <a class="btn btn-danger" href="{{ path('matiere_delete', { 'id': matiere.id}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}

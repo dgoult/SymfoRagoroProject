@@ -1,0 +1,41 @@
+{% extends 'admin/admin-home.html.twig' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+    <h3>Intervenants</h3>
+    <div class="d-flex justify-content-end">
+        <a class="mr-auto btn btn-primary " href="{{ path('intervenant_new') }}">Créer</a>
+    </div>
+    <div class="listing-intervenant">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Spécialité</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for intervenant in intervenants %}
+                <tr>
+                    <td>{{ intervenant.id }}</td>
+                    <td>{{ intervenant.user.nom }}</td>
+                    <td>{{ intervenant.user.prenom }}</td>
+                    <td>{{ intervenant.SpecialiteProfessionnelle }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('intervenant_edit', { 'id': intervenant.id}) }}">Modifier</a>
+                        <a class="btn btn-danger" href="{{ path('intervenant_delete', { 'id': intervenant.id}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}
