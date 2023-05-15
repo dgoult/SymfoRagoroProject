@@ -1,6 +1,7 @@
 {% extends 'admin/admin-home.html.twig' %}
 
 {% block content %}
+    {{ dump(statsIntervenant) }}
     <h1>Reporting Intervenant</h1>
     <br/>
     <div class="container" id="reporting-intervenant"></div>
@@ -19,9 +20,9 @@
                     <td>{{ intervenant }}</td>
                     {% for matiere, stat in stats %}
                         {% if matiere in 'total' %}
-                            <td>{{ matiere }} {{ stat.h }}h {{ stat.m }}m</td>
+                            <td>{{ matiere }} {{ stat.minutes // 60 }}h {{ stat.minutes % 60 }}m</td>
                         {% else %}
-                            <td style="border-color: {{ stat.couleur }}; border-width: 2px">{{ matiere }} {{ stat.h }}h {{ stat.m }}m</td>
+                            <td style="border-color: {{ stat.couleur }}; border-width: 2px">{{ matiere }} {{ stat.minutes // 60 }}h {{ stat.minutes % 60}}m</td>
                         {% endif %}
                     {% endfor %}
                 </tr>

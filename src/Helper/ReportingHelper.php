@@ -21,12 +21,20 @@ class ReportingHelper
 
         foreach ($intervenants as $intervenant) {
             $cours = $intervenant->getCours();
-            $coursByIntervenant = ['Total : ' . PHP_EOL => self::totalHeuresParIntervenant($intervenant)];
+            $coursByIntervenant = ['Total : ' => self::totalMinutesParIntervenant($intervenant)];
             foreach ($cours as $cour) {
-                if (array_key_exists($cour->getMatiere()->getIntitule(), $coursByIntervenant)) {
-                    $coursByIntervenant[$cour->getMatiere()->getIntitule()] += $cour->getDureeHeures();
+                $intituleMatiere = $cour->getMatiere()->getIntitule();
+
+                if (!array_key_exists($intituleMatiere, $coursByIntervenant)) {
+                    $coursByIntervenant[$intituleMatiere] = [
+                        'minutes' => $cour->getDureeMinutes(),
+                        'couleur' => $cour->getMatiere()->getCouleurCalendrier()
+                    ];
                 } else {
-                    $coursByIntervenant[$cour->getMatiere()->getIntitule()] = $cour->getDureeHeures();
+                    $coursByIntervenant[$intituleMatiere] = [
+                        'minutes' => $coursByIntervenant[$intituleMatiere]['minutes'] + $cour->getDureeMinutes(),
+                        'couleur' => $cour->getMatiere()->getCouleurCalendrier()
+                    ];
                 }
             }
             $intervenantReportingArray[$intervenant->getFullName()] = $coursByIntervenant;
@@ -61,17 +69,16 @@ class ReportingHelper
      *
      * @return array
      */
-    #[Pure] public static function totalHeuresParIntervenant(Intervenant $intervenant): array
+    #[Pure] public static function totalMinutesParIntervenant(Intervenant $intervenant): array
     {
         // En Minutes
-        $totalHeures = 0;
+        $totalMinutes = 0;
         $cours = $intervenant->getCours();
         foreach ($cours as $cour) {
-            $totalHeures += $cour->getDureeMinutes();
+            $totalMinutes += $cour->getDureeMinutes();
         }
         return [
-            'h' => floor($totalHeures / 60),
-            'm' => $totalHeures % 60,
+            'minutes' => $totalMinutes,
             'couleur' => "#000000"
         ];
     }
