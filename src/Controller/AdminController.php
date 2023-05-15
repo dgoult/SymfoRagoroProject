@@ -40,7 +40,8 @@ class AdminController extends AbstractController
             'title' => 'Details Formation',
             'formation' => $formation,
             'dureeTotalCours' => $totalHoursCours,
-            'statsIntervenant' => ReportingHelper::statsIntervenant($intervenantRepository)
+            'statsIntervenant' => ReportingHelper::statsIntervenant($intervenantRepository),
+            'heuresIntervenant' => ReportingHelper::heuresIntervenant($intervenantRepository)
         ]);
     }
 }

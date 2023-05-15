@@ -1,0 +1,69 @@
+{% extends 'admin/admin-home.html.twig' %}
+
+{% block content %}
+    <h1>Reporting Intervenant</h1>
+    <br/>
+    <div class="container" id="reporting-intervenant"></div>
+    <h2>Reporting heures par intervenant</h2>
+    <div class="">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Intervenant</th>
+                <th colspan="100%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for intervenant, stats in statsIntervenant %}
+                <tr>
+                    <td>{{ intervenant }}</td>
+                    {% for matiere, stat in stats %}
+                        {% if matiere in 'total' %}
+                            <td>{{ matiere }} {{ stat.h }}h {{ stat.m }}m</td>
+                        {% else %}
+                            <td style="border-color: {{ stat.couleur }}; border-width: 2px">{{ matiere }} {{ stat.h }}h {{ stat.m }}m</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Intervenant</th>
+                <th colspan="100%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for intervenant, stats in heuresIntervenant %}
+                <tr>
+                    <td>{{ intervenant }}</td>
+                    {% for matiere, stat in stats %}
+                        <td>{{ stat }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="">
+            {% for intervenant, heures in heuresIntervenant %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        {{ intervenant }}
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for heure in heures %}
+                            <li class="list-group-item">{{ heure }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

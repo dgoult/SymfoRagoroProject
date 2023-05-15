@@ -24,28 +24,9 @@
                 </div>
             </div>
 
-            <div class="">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Intervenant</th>
-                            <th colspan="100%"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for intervenant, stats in statsIntervenant %}
-                            <tr>
-                                <td>{{ intervenant }}</td>
-                                {% for matiere, stat in stats %}
-                                    <td style="border-color: {{ stat.couleur }}; border-width: 2px">{{ matiere }} {{ stat.h }}h {{ stat.m }}m</td>
-                                {% endfor %}
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
 
-            {{ dump(statsIntervenant) }}
+
+
         </div>
     </div>
 {% endblock %}

@@ -8,6 +8,11 @@ import listPlugin from "@fullcalendar/list";
 import jquery from 'jquery';
 window.$ = window.jQuery = jquery;
 
+const modal = $('#calendarModal');
+const form = modal.find('form');
+const listElement = document.getElementById('commentaire_liste_div');
+
+
 document.addEventListener("DOMContentLoaded", () => {
     let calendarEl = document.getElementById("calendar-holder");
 
@@ -33,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
             right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
         },
         initialView: "timeGridWeek",
-        locale: 'fr',
+        locale: 'fr_FR',
         //navLinks: true, // can click day/week names to navigate views
         plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
         timeZone: "UTC",
@@ -42,10 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
         eventClick: function(info) {
             // permet d'empêcher l'ouverture du lien dans la property 'url'
             info.jsEvent.preventDefault();
-
-            const modal = $('#calendarModal');
-            const form = modal.find('form');
-            const listElement = document.getElementById('commentaire_liste_div');
             const ulElement = document.createElement('ul');
             ulElement.setAttribute('id', 'commentaire_list');
 
@@ -101,3 +102,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     calendar.render();
 });
+
