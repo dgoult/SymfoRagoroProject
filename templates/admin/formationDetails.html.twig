@@ -19,8 +19,8 @@
             <div class="col">
                 <h3>Informations</h3>
                 <div class="formation-details">
-                    <span>Nombre d'intervenant : 23</span>
-                    <span>Heures de cours restante à assigner : {{ dureeTotalCours }}</span>
+                    <span>Nombre d'intervenant : {{ qteIntervenant }}</span><br />
+                    <span>Heures de cours assignées : {{ qteHeureAttribue // 60 }}h {{ qteHeureAttribue % 60 }}m</span>
                 </div>
             </div>
 

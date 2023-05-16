@@ -33,6 +33,9 @@ class CoursController extends AbstractController
         return $this->render('calendar.html.twig');
     }
 
+    /**
+     * @throws Exception
+     */
     #[Route('/cours/calender_new', name: 'app_cours_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CoursRepository $coursRepository): Response
     {
@@ -41,9 +44,11 @@ class CoursController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $cour = $form->getData();
             // Calcul de la durée du cours
             $interval = date_diff($cour->getDateDebut(), $cour->getDateFin(), true);
             $cour->setDureeMinutes(((int)$interval->format("%h") * 60) + (int)$interval->format("%i"));
+
             $coursRepository->save($cour, true);
 
             return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
@@ -68,7 +73,7 @@ class CoursController extends AbstractController
     /**
      * @Route("/cours/new", name="cours_new")
      */
-    public function newCours(Request $request)
+    public function newCours(Request $request, CoursRepository $coursRepository)
     {
         $newCours = new Cours();
 
@@ -79,6 +84,7 @@ class CoursController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()){
             $newCours = $this->getCoursData($form);
+            $coursRepository->save($newCours);
             $this->addFlash('success', 'Le cours '. $newCours->getId().' à été enregistré avec succés');
         }
 
