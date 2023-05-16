@@ -1,0 +1,56 @@
+{% extends 'admin/admin-home.html.twig' %}
+
+{% block content %}
+    <h1>Reporting matiere</h1>
+    <br/>
+    <div class="container" id="reporting-matiere"></div>
+
+    <div class="">
+        <h2>Durée totale de chaque matières</h2>
+        <br />
+        <table class="table">
+            <thead>
+            <tr>
+                <th colspan="10%">Matiere</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for matiere, stats in statsMatiere %}
+                <tr>
+                    <td>{{ matiere }}</td>
+
+                    {% if matiere in 'total' %}
+                        <td>{{ stats // 60 }}h {{ stats % 60 }}m</td>
+                    {% else %}
+                        <td>{{ stats // 60 }}h {{ stats % 60}}m</td>
+                    {% endif %}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <div class="">
+        <h2>Dates d'enseignement des matières</h2>
+        <br />
+        <div class="">
+            {% for matiere, heures in heuresMatiere %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <strong>{{ matiere }}</strong>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for heure in heures %}
+                            <li class="list-group-item">{{ heure }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

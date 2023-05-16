@@ -1,12 +1,11 @@
 {% extends 'admin/admin-home.html.twig' %}
 
 {% block content %}
-    {{ dump(statsIntervenant) }}
     <h1>Reporting Intervenant</h1>
     <br/>
     <div class="container" id="reporting-intervenant"></div>
-    <h2>Reporting heures par intervenant</h2>
     <div class="">
+        <h2>Total heures pour chaque intervenant/matiere</h2>
         <table class="table">
             <thead>
             <tr>
@@ -32,30 +31,13 @@
     </div>
 
     <div class="">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Intervenant</th>
-                <th colspan="100%"></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for intervenant, stats in heuresIntervenant %}
-                <tr>
-                    <td>{{ intervenant }}</td>
-                    {% for matiere, stat in stats %}
-                        <td>{{ stat }}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
+        <h2>Dates d'intervention de chaque intervenant</h2>
+        <br />
         <div class="">
             {% for intervenant, heures in heuresIntervenant %}
                 <div class="card mb-3">
                     <div class="card-header">
-                        {{ intervenant }}
+                        <strong>{{ intervenant }}</strong>
                     </div>
                     <ul class="list-group list-group-flush">
                         {% for heure in heures %}
